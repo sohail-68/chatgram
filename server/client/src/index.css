@@ -1,0 +1,48 @@
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* .classs{
+    display: block;
+}
+@media screen and (max-width:900px) {
+    .classs{
+        display: none;
+    }
+    
+} */
+ *{
+    margin: 0;padding: 0;
+ }
+ /* Custom Scrollbar Class */
+.custom-scrollbar {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+  
+  /* Light Theme */
+.theme-light {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --primary-color: #6b73ff;
+    --secondary-color: #000dff;
+  }
+  
+  /* Dark Theme */
+  .theme-dark {
+    --bg-color: #1a202c;
+    --text-color: #f7fafc;
+    --primary-color: #3182ce;
+    --secondary-color: #2d3748;
+  }
+  
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: all 0.3s ease-in-out;
+  }
+  
