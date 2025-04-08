@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { io } from 'socket.io-client';
 
-const API = axios.create({ baseURL: 'https://chatgram-backend-tkgv.onrender.com/api' });
+const API = axios.create({ baseURL: 'https://chatgram-backend-tkgv.onrender.com' });
 
 // Attach the token for authorization
 API.interceptors.request.use((req) => {
@@ -17,7 +17,7 @@ export const login = (formData) => API.post('/auth/login', formData);
 export const register = (formData) => API.post('/auth/register', formData);
 
 // Post API
-export const fetchPosts = () => API.get('/all');
+export const fetchPosts = () => API.get('/api/all');
 export const Del = (id) => API.delete(`/delete/${id}`);
 export const createPost = (postData) => API.post('/addpost', postData);
 export const Edit = (id,postData) => API.put(`/edit/${id}`, postData);
