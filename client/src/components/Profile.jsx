@@ -30,7 +30,7 @@ const {bookmarks,setbookmarks} =useChatMessages()
           {
             headers: { Authorization: token },
           }
-          withCredentials: true, //
+          /
         );
        //response);
 console.log(response);
