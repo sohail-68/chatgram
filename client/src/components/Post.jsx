@@ -141,6 +141,8 @@ const Post = ({ post, handleDeleteSuccess }) => {
       exit="exit"
       className="relative rounded-2xl shadow-lg bg-white p-4 mb-6"
     >
+
+      aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
       <div className="flex justify-between items-center mb-2">
         <div className="flex items-center gap-2">
           <motion.div
