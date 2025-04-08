@@ -26,7 +26,7 @@ const {bookmarks,setbookmarks} =useChatMessages()
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5001/api/auth/myprofile",
+          "https://chatgram-frontend.onrender.com/api/auth/myprofile",
           {
             headers: { Authorization: token },
           }
