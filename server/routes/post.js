@@ -19,7 +19,7 @@ const {
 const router = express.Router();
 
 // Add a new post with image upload
-router.post('/addpost', isAuthenticated, express.json({ limit: '20mb' }), addNewPost);
+router.post('/addpost', express.json({ limit: '20mb' }), addNewPost);
 
 // Get all posts (e.g., for the feed)
 router.get('/all',  getAllPost);
