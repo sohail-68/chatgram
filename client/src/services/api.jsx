@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { io } from 'socket.io-client';
 
-const API = axios.create({ baseURL: 'http://localhost:5001/api' });
+const API = axios.create({ baseURL: 'https://chatgram-backend-tkgv.onrender.com/api' });
 
 // Attach the token for authorization
 API.interceptors.request.use((req) => {
