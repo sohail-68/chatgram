@@ -8,7 +8,7 @@ const addNewPost = async (req, res) => {
     const { caption, image ,mood} = req.body; // Get caption and image from request body
 
     const post = new Post({
-      user: req.user.id, // Get user ID from authenticated request
+      // Get user ID from authenticated request
       image, // Use Base64 image string directly
       caption,
       mood,
