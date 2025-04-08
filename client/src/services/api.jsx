@@ -5,12 +5,12 @@ import { io } from 'socket.io-client';
 const API = axios.create({ baseURL: 'https://chatgram-backend-tkgv.onrender.com/api' });
 
 // Attach the token for authorization
-API.interceptors.request.use((req) => {
-  if (sessionStorage.getItem('token')) {
-    req.headers.Authorization =sessionStorage.getItem('token');
-  }
-  return req;
-});
+// API.interceptors.request.use((req) => {
+//   if (sessionStorage.getItem('token')) {
+//     req.headers.Authorization =sessionStorage.getItem('token');
+//   }
+//   return req;
+// });
 
 // Auth API
 export const login = (formData) => API.post('/auth/login', formData);
