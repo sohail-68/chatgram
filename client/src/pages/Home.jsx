@@ -38,6 +38,7 @@ console.log(posts);
 
   return (
     <div className=''>
+      <p>asa</p>
       {posts.map((post) => (
         <Post key={post._id} post={post}  handleDeleteSuccess={handleDeleteSuccess}/>
       ))}
