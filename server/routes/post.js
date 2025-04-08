@@ -22,7 +22,7 @@ const router = express.Router();
 router.post('/addpost', isAuthenticated, express.json({ limit: '20mb' }), addNewPost);
 
 // Get all posts (e.g., for the feed)
-router.get('/all', isAuthenticated, getAllPost);
+router.get('/all',  getAllPost);
 router.get('/notification', isAuthenticated, GetNoti);
 router.get('/count/:id', isAuthenticated, getCount);
 router.get('/user/postCount', isAuthenticated, getUserPostCount);
