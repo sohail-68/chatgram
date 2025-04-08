@@ -7,7 +7,7 @@ const BookmarkedPosts = () => {
   useEffect(() => {
     const fetchBookmarks = async () => {
       const token = sessionStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/bookmarked', {
+      const response = await axios.get('https://chatgram-backend-tkgv.onrender.com/api/bookmarked', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setBookmarks(response.data);
