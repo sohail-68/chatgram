@@ -7,25 +7,41 @@ require('dotenv').config();
 
 const app = express();
 const server = http.createServer(app);
+
+// ✅ Allow both localhost and production frontend
+const allowedOrigins = [
+    'http://localhost:3000',
+    'https://your-frontend-domain.onrender.com'  // <-- update with your live frontend URL
+];
+
+// ✅ CORS setup for express routes
+app.use(cors({
+    origin: allowedOrigins,
+    credentials: true,
+}));
+
+// ✅ Enable express.json middleware
+app.use(express.json());
+
+// ✅ CORS for Socket.IO
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:3000", // Update this with your frontend URL
+        origin: allowedOrigins,
         methods: ["GET", "POST"],
-    },
+        credentials: true
+    }
 });
 
-// Connect to MongoDB
+// ✅ CORS preflight handling
+app.options('*', cors());
+
+// ✅ Connect MongoDB
 connectDB();
 
-// Middleware
-app.use(express.json());
-app.use(cors());
-
-// Socket.IO Setup
+// ================= Socket.IO Events =================
 io.on('connection', (socket) => {
     console.log(`User connected: ${socket.id} at ${new Date().toLocaleTimeString()}`);
 
-    // Join Room Event
     socket.on('joinRoom', (userId) => {
         if (userId) {
             socket.join(userId);
@@ -35,33 +51,27 @@ io.on('connection', (socket) => {
         }
     });
 
-    // Typing Indicator Event
     socket.on('typing', (userId) => {
         if (userId) {
             console.log(`User ${userId} is typing...`);
-            // Broadcast typing status to the room excluding the sender
             socket.broadcast.emit('typing', userId);
         } else {
             console.error('typing event received without userId');
         }
     });
 
-    // Stop Typing Indicator Event
     socket.on('stopTyping', (userId) => {
         if (userId) {
             console.log(`User ${userId} stopped typing`);
-            // Broadcast stop typing status to the room
             socket.broadcast.emit('stopTyping', userId);
         } else {
             console.error('stopTyping event received without userId');
         }
     });
 
-    // Message Event - sendMessage
     socket.on('sendMessage', ({ message, senderId, receiverId }) => {
         if (message && senderId && receiverId) {
-            console.log(`Message received on server: "${message}" from ${senderId} to ${receiverId}`);
-            // Send the message to the receiver
+            console.log(`Message: "${message}" from ${senderId} to ${receiverId}`);
             io.to(receiverId).emit('receiveMessage', {
                 message,
                 senderId,
@@ -73,21 +83,17 @@ io.on('connection', (socket) => {
         }
     });
 
-    // Another Send Event - send
- 
-    // Handle User Disconnect
     socket.on('disconnect', () => {
         console.log(`User disconnected: ${socket.id}`);
-        // Perform any clean-up actions here if needed
     });
 });
 
-// API Routes
+// ✅ API Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api', require('./routes/post'));
 app.use('/api/comment', require('./routes/comment'));
 
-// Start Server
+// ✅ Start Server
 const PORT = process.env.PORT || 5001;
 server.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
