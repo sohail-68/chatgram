@@ -10,7 +10,7 @@ const server = http.createServer(app);
 
 // ✅ Allow both localhost and production frontend
 const allowedOrigins = [
-    'http://localhost:5001',
+    'http://localhost:3000',
     'https://chatgram-frontend.onrender.com'  // <-- update with your live frontend URL
 ];
 
