@@ -30,11 +30,9 @@ function App() {
             <Route
               path="/"
               element={
-                <ProtectedRoute>
                   <MainLayout>
                     <Home />
                   </MainLayout>
-                </ProtectedRoute>
               }
             />
             <Route
