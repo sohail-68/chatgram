@@ -10,7 +10,7 @@ const Notifications = () => {
     const fetchNotifications = async () => {
       try {
         const response = await axios.get("http://localhost:5001/api/notification", {
-          headers: { Authorization: `${sessionStorage.getItem('token')}` }
+          headers: { Authorization: `${localStorage.getItem('token')}` }
         });
         setNotifications(response.data);
       } catch (err) {
@@ -27,7 +27,7 @@ console.log(notifications);
   if (error) return <p>{error}</p>;
 
   // Assuming current user ID is stored in session storage
-  const currentUserId = sessionStorage.getItem("userid");
+  const currentUserId = localStorage.getItem("userid");
 
   // Filter notifications to only include those with likes from other users
   const filteredNotifications = notifications.filter(notification => 
