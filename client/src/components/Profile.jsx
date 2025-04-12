@@ -43,7 +43,7 @@ setMessage(response.data.message);
           profilePicture: response.data.user.profilePicture,
           gender: response.data.user.gender,
         });
-        sessionStorage.setItem("profile", JSON.stringify(response.data.user));
+        localStorage.setItem("profile", JSON.stringify(response.data.user));
       } catch (error) {
         console.error("Failed to fetch user data", error);
       }
@@ -158,7 +158,7 @@ console.log(use);
   const del = async () => {
     
     try {
-      const token =localStorage.getItem("token"); // Retrieve token from sessionStorage
+      const token =localStorage.getItem("token"); // Retrieve token from localStorage
       if (!token) throw new Error("User not authenticated");
   
       // Make POST request to bookmark API
