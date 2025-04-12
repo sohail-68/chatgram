@@ -14,14 +14,14 @@ const Messgesss = () => {
   const [localm, setlocalm] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
-  const currentUserId = sessionStorage.getItem('userid');
+  const currentUserId = localStorage.getItem('userid');
 
   // Fetch suggested users from API
   const fetchSuggestedUsers = async () => {
     try {
       const response = await axios.get('https://chatgram-backend-934g.onrender.com/api/auth/getfolow', {
         headers: {
-          Authorization: sessionStorage.getItem("token"),
+          Authorization: localStorage.getItem("token"),
         },
       });
       setSuggest(response.data);
