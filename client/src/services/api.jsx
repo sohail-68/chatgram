@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { io } from 'socket.io-client';
 
-const API = axios.create({ baseURL: 'http://localhost:5001/api' });
+const API = axios.create({ baseURL: 'https://chatgram-backend-934g.onrender.com' });
 
 // Attach the token for authorization
 API.interceptors.request.use((req) => {
@@ -15,16 +15,16 @@ API.interceptors.request.use((req) => {
 });
 
 // Auth API
-export const login = (formData) => API.post('/auth/login', formData);
-export const register = (formData) => API.post('/auth/register', formData);
+export const login = (formData) => API.post('/api/auth/login', formData);
+export const register = (formData) => API.post('/api/auth/register', formData);
 
 // Post API
-export const fetchPosts = () => API.get('/all');
-export const Del = (id) => API.delete(`/delete/${id}`);
-export const createPost = (postData) => API.post('/addpost', postData);
-export const Edit = (id,postData) => API.put(`/edit/${id}`, postData);
-export const likePost = (id) => API.post(`${id}/like`);
-export const commentOnPost = (id, commentData) => API.post(`${id}/comment`,commentData);
+export const fetchPosts = () => API.get('/api/all');
+export const Del = (id) => API.delete(`/api/delete/${id}`);
+export const createPost = (postData) => API.post('api//addpost', postData);
+export const Edit = (id,postData) => API.put(`/api/edit/${id}`, postData);
+export const likePost = (id) => API.post(`/api/${id}/like`);
+export const commentOnPost = (id, commentData) => API.post(`/api/${id}/comment`,commentData);
 export const fetchComments = (id) => API.get(`/posts/${id}/comments`);
 // src/services/api.js
 
