@@ -17,7 +17,7 @@ const Dashboard = () => {
 const {bookmarks,setbookmarks} =useChatMessages()
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
     if (!token) {
       navigate("/login");
@@ -101,7 +101,7 @@ setMessage(response.data.message);
         `http://localhost:5001/api/userpost/all`,
         {
           headers: {
-            Authorization: `${sessionStorage.getItem("token")}`,
+            Authorization: `${localStorage.getItem("token")}`,
           },
         }
       );
@@ -122,7 +122,7 @@ console.log(use);
         `http://localhost:5001/api/user/postCount`,
         {
           headers: {
-            Authorization: `${sessionStorage.getItem("token")}`, // Add "Bearer" before the token
+            Authorization: `${localStorag.getItem("token")}`, // Add "Bearer" before the token
           },
         }
       );
@@ -139,7 +139,7 @@ console.log(use);
       const response = await axios.get(
         "http://localhost:5001/api/auth/bookmarked",
         {
-          headers: { Authorization: sessionStorage.getItem("token") },
+          headers: { Authorization: localStorage.getItem("token") },
         }
       );
       console.log(response);
@@ -158,7 +158,7 @@ console.log(use);
   const del = async () => {
     
     try {
-      const token =sessionStorage.getItem("token"); // Retrieve token from sessionStorage
+      const token =localStorage.getItem("token"); // Retrieve token from sessionStorage
       if (!token) throw new Error("User not authenticated");
   
       // Make POST request to bookmark API
