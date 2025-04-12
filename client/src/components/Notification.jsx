@@ -9,7 +9,7 @@ const Notifications = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/api/notification", {
+        const response = await axios.get("https://chatgram-backend-934g.onrender.com/api/notification", {
           headers: { Authorization: `${localStorage.getItem('token')}` }
         });
         setNotifications(response.data);
