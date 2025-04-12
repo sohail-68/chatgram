@@ -15,7 +15,7 @@ function SignUp() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5001/api/auth/register', { username, email, password });
+      const response = await axios.post('https://chatgram-backend-934g.onrender.com/api/auth/register', { username, email, password });
 
       // Assuming user data is returned after successful sign-up
       const userData = response.data.payload.user;
