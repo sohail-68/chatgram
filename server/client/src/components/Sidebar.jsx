@@ -24,7 +24,7 @@ const Sidebar = () => {
     setSocket(newSocket);
   
     // Join room
-    newSocket.emit('joinRoom', sessionStorage.getItem("userid"));
+    newSocket.emit('joinRoom', localStorage.getitem("userid"));
   
     // Listen for messages
     newSocket.on('receiveMessage', (msg) => {

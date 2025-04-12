@@ -16,7 +16,7 @@ console.log(unreadMessages);
   const params = useParams();
  //params);
  //location);
-  const currentUserId = sessionStorage.getItem("userid");
+  const currentUserId = localStorage.getitem("userid");
 
   const navigate=useNavigate()
   
@@ -24,7 +24,7 @@ console.log(unreadMessages);
   const [data, setData] = useState(null);
   const [post, setPost] = useState([]);
   const [showChat, setShowChat] = useState(false); // Toggle for chat box visibility
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getitem('token');
   const [postCount, setPostCount] = useState(null);
 
   // Initial check to see if the user is already following

@@ -15,7 +15,8 @@ const formatDate = (dateString) => {
 
 const Chat = () => {
     const { setMessages, messages, setSocket, socket } = useChatMessages();
-    const currentUserId = sessionStorage.getItem('userid');
+    const currentUserId = localStorage
+.getItem('userid');
     const { id: recipientId } = useParams();
     const location = useLocation();
 
@@ -86,6 +87,10 @@ const Chat = () => {
             socket.emit('stopTyping', currentUserId);
         }
     };
+    console.log(currentUserId,"send");
+    console.log(recipientId,"reciver");
+    
+console.log(messages);
 
     const handleTyping = (e) => {
         setMessage(e.target.value);
@@ -100,7 +105,8 @@ const Chat = () => {
         try {
             const profileResponse = await axios.get(
                 `http://localhost:5001/api/auth/userpro/${recipientId}`,
-                { headers: { Authorization: `${sessionStorage.getItem('token')}` } }
+                { headers: { Authorization: `${localStorage
+.getItem('token')}` } }
             );
             setData(profileResponse.data);
         } catch (error) {

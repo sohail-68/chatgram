@@ -265,11 +265,36 @@ const getSuggestedUsers = async (req, res) => {
     }
 };
 
+const searchUsers = async (req, res) => {
+    const searchQuery = req.query.q;
+
+    if (!searchQuery) {
+        return res.status(400).json({ error: "Search query is required." });
+    }
+
+    try {
+        const users = await User.find({
+            _id: { $ne: req.user.id }, // Exclude the logged-in user
+            $or: [
+                { name: { $regex: searchQuery, $options: "i" } },
+                { username: { $regex: searchQuery, $options: "i" } },
+                { email: { $regex: searchQuery, $options: "i" } },
+            ],
+        }).limit(10); // Limit results for performance
+
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
 // Export all controller functions as a module
 module.exports = {
     register,
     login,
     logout,
+    searchUsers,
     // getProfile,
     editProfile,
     followOrUnfollowUser,

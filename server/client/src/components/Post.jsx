@@ -29,7 +29,7 @@ const Post = ({ post, handleDeleteSuccess }) => {
 
   useEffect(() => {
     const isPostLiked = post.likes.some(
-      (like) => like.user === sessionStorage.getItem("userid")
+      (like) => like.user === localStorage.getitem("userid")
     );
     setLiked(isPostLiked);
   }, [post.likes]);
@@ -40,7 +40,7 @@ const Post = ({ post, handleDeleteSuccess }) => {
     try {
       const updatedPost = await likePost(post._id);
       const isLiked = updatedPost.data.post.likes.some(
-        (like) => like.user === sessionStorage.getItem("userid")
+        (like) => like.user === localStorage.getitem("userid")
       );
       setLiked(isLiked);
       setLikesCount(updatedPost.data.post.likes.length);
@@ -87,7 +87,7 @@ const Post = ({ post, handleDeleteSuccess }) => {
   
 
   const openUserProfile = () => {
-    if (post.user._id === sessionStorage.getItem("userid")) {
+    if (post.user._id === localStorage.getitem("userid")) {
       navigate("/profile");
     } else {
       navigate(`/userprofile/${post.user._id}`, { state: { post } });
@@ -96,7 +96,7 @@ const Post = ({ post, handleDeleteSuccess }) => {
 
   const handleSave = async (data) => {
     try {
-      const token = sessionStorage.getItem("token");
+      const token = localStorage.getitem("token");
       if (!token) throw new Error("User not authenticated");
   
       await axios.post(
@@ -160,7 +160,7 @@ const Post = ({ post, handleDeleteSuccess }) => {
             {post.user.username}
           </h6>
         </div>
-        {post.user._id === sessionStorage.getItem("userid") && (
+        {post.user._id === localStorage.getitem("userid") && (
           <FaEllipsisV
             className="text-gray-600 cursor-pointer"
             onClick={() => toggleMenu("menu")}

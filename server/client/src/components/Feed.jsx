@@ -6,7 +6,7 @@ const Feed = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const token = sessionStorage.getItem('token');
+      const token = localStorage.getitem('token');
       const response = await axios.get('http://localhost:5001/api/posts', {
         headers: { Authorization: `Bearer ${token}` },
       });

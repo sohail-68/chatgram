@@ -47,10 +47,12 @@ const Chat = ({ currentUserId, recipientId }) => {
             // Emit the message to the server
             socket.emit('sendMessage', msgData);
 
-            // Update local messages state and save to sessionStorage
+            // Update local messages state and save to localStorage
+
             setMessages((prevMessages) => {
                 const updatedMessages = [...prevMessages, msgData];
-                sessionStorage.setItem("chatMessages", JSON.stringify(updatedMessages));
+                localStorage
+.setItem("chatMessages", JSON.stringify(updatedMessages));
                 return updatedMessages;
             });
 
@@ -59,9 +61,9 @@ const Chat = ({ currentUserId, recipientId }) => {
         }
     };
 
-    // Load messages from sessionStorage on initial render
     useEffect(() => {
-        const storedMessages = sessionStorage.getItem("chatMessages");
+        const storedMessages = localStorage
+.getItem("chatMessages");
         if (storedMessages) {
             setMessages(JSON.parse(storedMessages));
         }

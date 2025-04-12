@@ -27,7 +27,7 @@ console.log(notifications);
   if (error) return <p>{error}</p>;
 
   // Assuming current user ID is stored in session storage
-  const currentUserId = sessionStorage.getItem("userid");
+  const currentUserId = localStorage.getitem("userid");
 
   // Filter notifications to only include those with likes from other users
   const filteredNotifications = notifications.filter(notification => 

@@ -17,7 +17,7 @@ const Dashboard = () => {
 const {bookmarks,setbookmarks} =useChatMessages()
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getitem("token");
 
     if (!token) {
       navigate("/login");
@@ -43,7 +43,8 @@ setMessage(response.data.message);
           profilePicture: response.data.user.profilePicture,
           gender: response.data.user.gender,
         });
-        sessionStorage.setItem("profile", JSON.stringify(response.data.user));
+        sessionStorage.setItem
+("profile", JSON.stringify(response.data.user));
       } catch (error) {
         console.error("Failed to fetch user data", error);
       }
@@ -79,7 +80,7 @@ setMessage(response.data.message);
 
   // Handle form submission
   const handleSave = async () => {
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getitem("token");
     try {
       const response = await axios.put(
         "http://localhost:5001/api/auth/myprofile",
@@ -139,7 +140,7 @@ console.log(use);
       const response = await axios.get(
         "http://localhost:5001/api/auth/bookmarked",
         {
-          headers: { Authorization: sessionStorage.getItem("token") },
+          headers: { Authorization: localStorage.getitem("token") },
         }
       );
       console.log(response);

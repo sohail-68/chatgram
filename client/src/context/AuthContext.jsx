@@ -1,21 +1,17 @@
-import React, { createContext, useState, useContext } from 'react';
+// ChatMessagesContext.js
+import { createContext, useContext, useState } from 'react';
 
-const ThemeContext = createContext();
+const ChatMessagesContext = createContext();
 
-export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('light'); // Default theme: 'light'
-
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
-  };
+export const ChatMessagesProvider = ({ children }) => {
+  const [messages, setMessages] = useState([]);
+  const [socket, setSocket] = useState(null);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div className={theme === 'light' ? 'theme-light' : 'theme-dark'}>
-        {children}
-      </div>
-    </ThemeContext.Provider>
+    <ChatMessagesContext.Provider value={{ messages, setMessages, socket, setSocket }}>
+      {children}
+    </ChatMessagesContext.Provider>
   );
 };
 
-export const useTheme = () => useContext(ThemeContext);
+export const useChatMessages = () => useContext(ChatMessagesContext);

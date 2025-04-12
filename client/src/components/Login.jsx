@@ -17,9 +17,12 @@ function App() {
       const userData = response.data.payload.user;
 console.log(userData);
 
-      sessionStorage.setItem('user', JSON.stringify(userData));
-      sessionStorage.setItem('userid', userData.id);
-      sessionStorage.setItem('token', response.data.token);
+      localStorage
+.setItem('user', JSON.stringify(userData));
+      localStorage
+.setItem('userid', userData.id);
+      localStorage
+.setItem('token', response.data.token);
 
       navigate('/');
     } catch (error) {

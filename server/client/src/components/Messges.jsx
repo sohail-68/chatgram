@@ -15,7 +15,7 @@ const formatDate = (dateString) => {
 
 const Chat = () => {
     const { setMessages, messages, setSocket, socket } = useChatMessages();
-    const currentUserId = sessionStorage.getItem('userid');
+    const currentUserId = localStorage.getitem('userid');
     const { id: recipientId } = useParams();
     const location = useLocation();
 
@@ -38,7 +38,8 @@ const Chat = () => {
             ) {
                 setMessages((prev) => {
                     const updatedMessages = [...prev, msg];
-                    localStorage.setItem('chatMessages', JSON.stringify(updatedMessages));
+                    sessionStorage.setItem
+('chatMessages', JSON.stringify(updatedMessages));
                     return updatedMessages;
                 });
             }
@@ -79,7 +80,8 @@ const Chat = () => {
             socket.emit('sendMessage', msgData);
             setMessages((prev) => {
                 const updatedMessages = [...prev, msgData];
-                localStorage.setItem('chatMessages', JSON.stringify(updatedMessages));
+                sessionStorage.setItem
+('chatMessages', JSON.stringify(updatedMessages));
                 return updatedMessages;
             });
             setMessage('');

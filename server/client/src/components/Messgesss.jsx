@@ -9,14 +9,14 @@ const Messgesss = () => {
   const [suggested, setSuggest] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
-  const currentUserId = sessionStorage.getItem('userid');
+  const currentUserId = localStorage.getitem('userid');
 
   // Fetch suggested users from API
   const fetchSuggestedUsers = async () => {
     try {
       const response = await axios.get('http://localhost:5001/api/auth/getfolow', {
         headers: {
-          Authorization: sessionStorage.getItem("token"),
+          Authorization: localStorage.getitem("token"),
         },
       });
       setSuggest(response.data);

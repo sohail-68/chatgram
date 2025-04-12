@@ -14,6 +14,7 @@ const UserProfile = React.lazy(() => import("./components/UserProfile.jsx"));
 const Messges = React.lazy(() => import("./components/Messges.jsx"));
 const Notification = React.lazy(() => import("./components/Notification.jsx"));
 const Messgesss = React.lazy(() => import("./components/Messgesss.jsx"));
+const Explore = React.lazy(() => import("./components/Explore.jsx"));
 
 function App() {
   return (
@@ -102,6 +103,17 @@ function App() {
                 <ProtectedRoute>
                   <MainLayout>
                     <Profile />
+                  </MainLayout>
+                </ProtectedRoute>
+              }
+            />
+
+<Route
+              path="/explore"
+              element={
+                <ProtectedRoute>
+                  <MainLayout>
+                    <Explore />
                   </MainLayout>
                 </ProtectedRoute>
               }

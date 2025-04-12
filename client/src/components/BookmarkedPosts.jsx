@@ -6,7 +6,8 @@ const BookmarkedPosts = () => {
 
   useEffect(() => {
     const fetchBookmarks = async () => {
-      const token = sessionStorage.getItem('token');
+      const token = localStorage
+.getItem('token');
       const response = await axios.get('http://localhost:5000/api/bookmarked', {
         headers: { Authorization: `Bearer ${token}` },
       });

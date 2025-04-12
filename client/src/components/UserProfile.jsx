@@ -16,7 +16,8 @@ console.log(unreadMessages);
   const params = useParams();
  //params);
  //location);
-  const currentUserId = sessionStorage.getItem("userid");
+  const currentUserId = localStorage
+.getItem("userid");
 
   const navigate=useNavigate()
   
@@ -24,7 +25,8 @@ console.log(unreadMessages);
   const [data, setData] = useState(null);
   const [post, setPost] = useState([]);
   const [showChat, setShowChat] = useState(false); // Toggle for chat box visibility
-  const token = sessionStorage.getItem('token');
+  const token = localStorage
+.getItem('token');
   const [postCount, setPostCount] = useState(null);
 
   // Initial check to see if the user is already following
@@ -161,10 +163,12 @@ function seTNew(id){
         <button 
         onClick={handleFollowClick} 
         className={`px-4 py-2 rounded-md font-semibold absolute right-2 bottom-4 ${
-          data.followers.includes(sessionStorage.getItem("userid"))  ? "bg-gray-400" : "bg-blue-500"
+          data.followers.includes(localStorage
+.getItem("userid"))  ? "bg-gray-400" : "bg-blue-500"
         } text-white`}
       >
-        {data.followers.includes(sessionStorage.getItem("userid")) ? 'unfollow' : 'follow'}
+        {data.followers.includes(localStorage
+.getItem("userid")) ? 'unfollow' : 'follow'}
       </button>
         </div>
       </div>
@@ -173,7 +177,8 @@ function seTNew(id){
 
 
       {/* Message Button */}
-      {data.followers.includes(sessionStorage.getItem("userid"))  && (
+      {data.followers.includes(localStorage
+.getItem("userid"))  && (
             <button 
               // onClick={() => setShowChat(!showChat)} 
               className="px-4 py-2 rounded-md font-semibold bg-blue-500 text-white"
@@ -184,7 +189,8 @@ function seTNew(id){
           )}
 
         {/* {showChat && ( */}
-      {/* { data.followers.length ? <Chat currentUserId={sessionStorage.getItem('userid')} recipientId={location.state.post.user._id}  />:null} */}
+      {/* { data.followers.length ? <Chat currentUserId={localStorage
+.getItem('userid')} recipientId={location.state.post.user._id}  />:null} */}
       {/* )} */}
     </div>
 

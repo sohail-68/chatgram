@@ -6,8 +6,10 @@ const API = axios.create({ baseURL: 'http://localhost:5001/api' });
 
 // Attach the token for authorization
 API.interceptors.request.use((req) => {
-  if (sessionStorage.getItem('token')) {
-    req.headers.Authorization =sessionStorage.getItem('token');
+  if (localStorage
+.getItem('token')) {
+    req.headers.Authorization =localStorage
+.getItem('token');
   }
   return req;
 });
@@ -50,7 +52,8 @@ export const fetchBookmarks = async () => {
     const response = await axios.get(
       "http://localhost:5001/api/auth/bookmarked",
       {
-        headers: { Authorization: sessionStorage.getItem("token") },
+        headers: { Authorization: localStorage
+.getItem("token") },
       }
     );
     return response.data.bookmarks; // Return bookmarks to caller

@@ -8,7 +8,7 @@ const Suggest = () => {
     try {
       const response = await axios.get('http://localhost:5001/api/auth/suggested-users', {
         headers: {
-          Authorization: sessionStorage.getItem("token")
+          Authorization: localStorage.getitem("token")
         }
       });
      //response.data);

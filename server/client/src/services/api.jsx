@@ -50,7 +50,7 @@ export const fetchBookmarks = async () => {
     const response = await axios.get(
       "http://localhost:5001/api/auth/bookmarked",
       {
-        headers: { Authorization: sessionStorage.getItem("token") },
+        headers: { Authorization: localStorage.getitem("token") },
       }
     );
     return response.data.bookmarks; // Return bookmarks to caller

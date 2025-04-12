@@ -13,7 +13,8 @@ const Auth = () => {
     try {
       if (isLogin) {
         const { data } = await login(formData);
-        sessionStorage.setItem('token', data.token);
+        sessionStorage.setItem
+('token', data.token);
       } else {
         await register(formData);
       }
