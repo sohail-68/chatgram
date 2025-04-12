@@ -79,7 +79,7 @@ setMessage(response.data.message);
 
   // Handle form submission
   const handleSave = async () => {
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
     try {
       const response = await axios.put(
         "http://localhost:5001/api/auth/myprofile",
@@ -122,7 +122,7 @@ console.log(use);
         `http://localhost:5001/api/user/postCount`,
         {
           headers: {
-            Authorization: `${localStorag.getItem("token")}`, // Add "Bearer" before the token
+            Authorization: `${localStorage.getItem("token")}`, // Add "Bearer" before the token
           },
         }
       );
