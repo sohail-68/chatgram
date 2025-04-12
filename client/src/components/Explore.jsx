@@ -18,7 +18,7 @@ const UserSearch = () => {
 
     const timeout = setTimeout(() => {
       axios
-        .get(`http://localhost:5001/api/auth/search?q=${encodeURIComponent(query)}`, {
+        .get(`https://chatgram-backend-934g.onrender.com/api/auth/search?q=${encodeURIComponent(query)}`, {
           headers: {
             Authorization: localStorage
 .getItem("token"),
