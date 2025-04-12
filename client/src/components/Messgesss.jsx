@@ -19,7 +19,7 @@ const Messgesss = () => {
   // Fetch suggested users from API
   const fetchSuggestedUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/api/auth/getfolow', {
+      const response = await axios.get('https://chatgram-backend-934g.onrender.com/api/auth/getfolow', {
         headers: {
           Authorization: sessionStorage.getItem("token"),
         },
@@ -35,7 +35,7 @@ const Messgesss = () => {
   }, []);
 
   useEffect(() => {
-    const newSocket = io('http://localhost:5001');
+    const newSocket = io('https://chatgram-backend-934g.onrender.com');
     setSocket(newSocket);
 
     // Join room
