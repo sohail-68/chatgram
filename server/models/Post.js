@@ -3,6 +3,7 @@ const mongoose = require('mongoose'); // Use require for importing
 const postSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   image: { type: String, required: true },
+  mood: { type: String, required: true ,},
   caption: { type: String },
   likes: [{ user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' } }],
   comments: [

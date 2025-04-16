@@ -2,21 +2,25 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { FaHeart, FaRegHeart, FaTrash, FaEdit, FaEllipsisV } from "react-icons/fa";
-import useChatMessages from '../hooks/useChatMessages';
+// import useChatMessages from '../hooks/useChatMessages';
 import { io } from 'socket.io-client';
+import { useChatMessages } from '../context/AuthContext'; // Make sure this path is correct
 
 
 const UserProfile = () => {
-  const {messages,unreadMessages,setSocket,setMessages,setUnreadMessages}=useChatMessages()
-console.log(unreadMessages);
+  // const {messages,unreadMessages,setSocket,  setMessages,setUnreadMessages}=useChatMessages()
+  const { messages,setSocket,socket ,suggestedUsers,fetchSuggestedUsers, setMessages } = useChatMessages();
+
 
   const location = useLocation();
  //location);
   
   const params = useParams();
+  console.log(params,"ppp");
+  
  //params);
  //location);
-  const currentUserId = localStorage
+  const currentUserId = sessionStorage
 .getItem("userid");
 
   const navigate=useNavigate()
@@ -25,7 +29,7 @@ console.log(unreadMessages);
   const [data, setData] = useState(null);
   const [post, setPost] = useState([]);
   const [showChat, setShowChat] = useState(false); // Toggle for chat box visibility
-  const token = localStorage
+  const token = sessionStorage
 .getItem('token');
   const [postCount, setPostCount] = useState(null);
 
@@ -50,11 +54,13 @@ console.log(unreadMessages);
       );
       setIsFollowing(res.data.message);
       fetchUserProfile(); // Refresh user profile data
+fetchSuggestedUsers()
     } catch (error) {
       console.error("Failed to toggle follow status:", error);
     }
   };
 console.log(isFollowing);
+
 
   // Fetch user profile and post count
   const fetchUserProfile = async () => {
@@ -107,7 +113,7 @@ console.log("pos",post);
         newSocket.on('receiveMessage', (msg) => {
           setMessages((prev) => [...prev, msg]);
           
-          setUnreadMessages((pre)=>pre+1)
+          // setUnreadMessages((pre)=>pre+1)
 
           // Show notification if the message is from the other user and the chat window is not in focus
          
@@ -122,8 +128,8 @@ function seTNew(id){
 }
   return (
   <div>
-      <div className="flex xl:justify-center items-center ">
-      <div className="flex items-center xl:gap-4">
+      <div className="flex xl:justify-center xl:items-center sm:justify-start sm:p-1  ">
+      <div className="flex xl:justify-center xl:items-center sm:justify-start gap-1 ">
         
         {/* User Profile Image */}
         <div className="w-20 h-20 sm:w-24 sm:h-24 xl:w-32 xl:h-32 overflow-hidden rounded-full border-2 border-gray-200">
@@ -135,7 +141,7 @@ function seTNew(id){
 </div>
         
         {/* User Details and Stats */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col xl:justify-center xl:items-center sm:justify-start gap-4">
           
           {/* User Name and Bio */}
           <div>
@@ -144,7 +150,7 @@ function seTNew(id){
           </div>
           
           {/* User Stats */}
-          <div className="flex gap-8 text-center">
+          <div className="flex gap-3 text-center">
             <div>
               <p className="text-xl font-semibold">{postCount}</p>
               <p className="text-gray-500">Posts</p>
@@ -158,18 +164,33 @@ function seTNew(id){
               <p className="text-gray-500">Following</p>
             </div>
           </div>
-        </div>
-        <div className='relative'>
-        <button 
+<div className='flex flex-row xl:justify-center xl:items-center sm:justify-starts  gap-1'>
+<button 
         onClick={handleFollowClick} 
-        className={`px-4 py-2 rounded-md font-semibold absolute right-2 bottom-4 ${
-          data.followers.includes(localStorage
+        className={`px-4 py-2 max-xl:relative max-xl:right-16
+     rounded-md font-semibold ${
+          data.followers.includes(sessionStorage
 .getItem("userid"))  ? "bg-gray-400" : "bg-blue-500"
         } text-white`}
       >
-        {data.followers.includes(localStorage
+        {data.followers.includes(sessionStorage
 .getItem("userid")) ? 'unfollow' : 'follow'}
       </button>
+      {data.followers.includes(sessionStorage
+.getItem("userid"))  && (
+            <button 
+              // onClick={() => setShowChat(!showChat)} 
+              className="px-4 py-2 max-xl:relative max-xl:right-16 rounded-md font-semibold bg-blue-500 text-white"
+              onClick={()=>seTNew(location.state ?location.state.post.user._id:params.id)}
+            >
+              Message{messages.length}
+            </button>
+          )}
+
+</div>
+        </div>
+        <div className='relative'>
+   
         </div>
       </div>
 
@@ -177,19 +198,10 @@ function seTNew(id){
 
 
       {/* Message Button */}
-      {data.followers.includes(localStorage
-.getItem("userid"))  && (
-            <button 
-              // onClick={() => setShowChat(!showChat)} 
-              className="px-4 py-2 rounded-md font-semibold bg-blue-500 text-white"
-              onClick={()=>seTNew(location.state.post.user._id)}
-            >
-              Message{messages.length}
-            </button>
-          )}
+
 
         {/* {showChat && ( */}
-      {/* { data.followers.length ? <Chat currentUserId={localStorage
+      {/* { data.followers.length ? <Chat currentUserId={sessionStorage
 .getItem('userid')} recipientId={location.state.post.user._id}  />:null} */}
       {/* )} */}
     </div>
@@ -199,7 +211,7 @@ function seTNew(id){
         {post.length > 0 ? (
           post.map((item, index) => (
             <div key={index} className="shadow-md hover:scale-90 transition-all">
-              <img src={item.image} alt="post" className="xl:w-[25vw] max-md:w-[100vw]  object-contain aspect-[3/2]" />
+              <img src={item.image} alt="post" className=" w-full max-md:w-[100vw]  object-cover  aspect-[3/2]" />
               <p>{item.caption}</p>
               <div className="flex items-center gap-2 mt-2">
                 {

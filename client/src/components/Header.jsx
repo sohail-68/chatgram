@@ -1,6 +1,6 @@
 // src/components/Header.jsx
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiSearch, FiHeart, FiMessageCircle, FiUser } from 'react-icons/fi';
 import { useEffect } from 'react';
 import img from "../images/img.jpg"
@@ -8,6 +8,7 @@ const getprfrofile = JSON.parse(sessionStorage.getItem('profile')) || {};
 const Header = () => {
   
   const [scroll,setScroll]=useState(false)
+  const navigate=useNavigate()
   useEffect(() => {
     // Define the scroll event handler
     const handleScroll = () => {
@@ -32,11 +33,11 @@ const Header = () => {
   } h-20`} // Fixed height
 >
   <div className="max-md:ml-10 text-amber-950 text-2xl font-bold">
-    <img src={img} alt="Logo" className=" bg-none w-20 h-20" /> {/* Fixed logo size */}
+    <img src={img} alt="Logo" className=" bg-none w-20 h-20" onClick={()=>navigate("/")} />
   </div>
 
   <div className=''>
-    <img src={getprfrofile.profilePicture} className='w-8' alt="" />
+    {/* <img src={getprfrofile.profilePicture} className='w-8' alt="" /> */}
   </div>
 </header>
 

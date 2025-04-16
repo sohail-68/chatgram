@@ -15,7 +15,8 @@ const {
     getUserProfile,
     Gtefolow,
     deleteAllBookmarks,
-    searchUsers
+    searchUsers,
+    changePassword
 } = require('../controllers/userController'); // Ensure the path is correct
 
 const router = express.Router();
@@ -29,6 +30,7 @@ router.put('/myprofile', express.json({ limit: '10mb' }),  isAuthenticated,profi
 // User Login
 router.post('/login', login);
 router.get("/search", isAuthenticated, searchUsers);
+router.put("/changepass", isAuthenticated, changePassword);
 router.get('/logout', isAuthenticated, logout); // Ensure logout is authenticated
 
 // router.get('/profile/:id', isAuthenticated, getProfile); // Ensure you're passing the function

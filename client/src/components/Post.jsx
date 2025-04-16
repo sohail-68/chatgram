@@ -1,3 +1,4 @@
+import { Trash2, Pencil } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion"; // Import Framer Motion
 import {
@@ -15,6 +16,8 @@ import {
   FaBookmark,
   FaCommentDots,
 } from "react-icons/fa";
+import { Heart, Bookmark, MessageCircleMore, HeartCrack } from "lucide-react";
+
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify"; // Toast notifications
@@ -139,44 +142,33 @@ const Post = ({ post, handleDeleteSuccess }) => {
       initial="hidden"
       animate="visible"
       exit="exit"
-      className="relative rounded-2xl shadow-lg bg-white p-4 mb-6"
+      className="relative rounded-3xl backdrop-blur-md   bg-white/30 shadow-xl border border-white/20 pt-3  xl:p-5 max-xl:p-3 mb-8"
+
     >
-      <div className="flex justify-between items-center mb-2">
-        <div className="flex items-center gap-2">
-          <motion.div
-            className="w-10 h-10 rounded-full overflow-hidden"
-            whileHover={{ scale: 1.1 }}
-          >
-            <img
-              src={post.user.profilePicture}
-              alt="Profile"
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
-          <h6
-            className="text-slate-800 font-semibold cursor-pointer"
-            onClick={openUserProfile}
-          >
-            {post.user.username}
-          </h6>
-        </div>
-        {post.user._id === sessionStorage.getItem("userid") && (
-          <FaEllipsisV
-            className="text-gray-600 cursor-pointer"
-            onClick={() => toggleMenu("menu")}
-          />
-        )}
-      </div>
+  <div className="flex items-center gap-3">
+  <img
+    src={post.user.profilePicture}
+    alt="Profile"
+    className="w-10 h-10 rounded-full object-cover ring-2 ring-white"
+  />
+  <h6
+    className="text-gray-900 font-semibold hover:underline cursor-pointer text-base"
+    onClick={openUserProfile}
+  >
+    {post.user.username}
+  </h6>
+
+</div>
+
 
       {post.image && (
         <motion.div
-          className="mb-4"
-          whileHover={{ scale: 1.02 }}
+          className="mb-4 xl:p-2 max-xl:p-0 "
         >
           <img
             src={post.image}
             alt="Post"
-            className="w-full h-auto max-h-[500px] object-contain rounded-lg"
+            className="w-full mt-2 object-contain rounded-lg"
           />
         </motion.div>
       )}
@@ -210,49 +202,49 @@ const Post = ({ post, handleDeleteSuccess }) => {
             : "Unknown"}
         </motion.p>
       </div>
-      <div className="flex  relative top-5 gap-1">
+      <div className="flex mb-3  relative top-5 gap-4">
   {/* Like Button */}
   <motion.button
     onClick={handleLike}
-    className="group flex  items-center gap-2 text-gray-700 hover:text-red-500 transition-all duration-300"
+    className="group flex items-center gap-1 text-gray-700 hover:text-red-500 transition-all duration-300"
     aria-label={liked ? "Unlike post" : "Like post"}
     whileTap={{ scale: 0.9 }}
-    initial={{y:-1000}}
-    animate={{ opacity: 1 ,y:0, transition: { duration: 2 }}}
-    
+    initial={{ y: -1000 }}
+    animate={{ opacity: 1, y: 0, transition: { duration: 2 } }}
   >
     {liked ? (
-      <FaHeart className="w-6 h-6 text-red-500 group-hover:scale-110 transition-all duration-300" />
+      <Heart className="w-6 h-6 fill-red-500 text-red-500 group-hover:scale-110 transition-all duration-300" />
     ) : (
-      <HeartIcon className="w-6 h-6 text-gray-700 group-hover:text-red-500 group-hover:scale-110 transition-all duration-300" />
+      <Heart className="w-6 h-6 group-hover:text-red-500 group-hover:scale-110 transition-all duration-300" />
     )}
-    <span className="text-lg font-medium">{likesCount}</span>
+    <span className="text-sm font-medium">{likesCount}</span>
   </motion.button>
 
   {/* Save Button */}
   <motion.button
     onClick={() => handleSave(post._id)}
-    className="group flex items-center gap-2 text-gray-700 hover:text-blue-500 transition-all duration-300"
+    className="group flex items-center gap-1 text-gray-700 hover:text-blue-500 transition-all duration-300"
     whileTap={{ scale: 0.9 }}
-    initial={{y:-1000}}
-    animate={{ opacity: 1 ,y:0, transition: { duration: 2 }}}
+    initial={{ y: -1000 }}
+    animate={{ opacity: 1, y: 0, transition: { duration: 2 } }}
   >
-    <BookmarkIcon className="w-6 h-6 text-gray-700 group-hover:text-blue-500 group-hover:scale-110 transition-all duration-300" />
-    <span className="text-lg font-medium">Save</span>
+    <Bookmark className="w-6 h-6 group-hover:text-blue-500 group-hover:scale-110 transition-all duration-300" />
+    <span className="text-sm font-medium">Save</span>
   </motion.button>
 
   {/* Comment Button */}
   <motion.button
     onClick={() => toggleMenu("comment")}
-    className="group flex items-center gap-2 text-gray-700 hover:text-green-500 transition-all duration-300"
+    className="group flex items-center gap-1 text-gray-700 hover:text-green-500 transition-all duration-300"
     whileTap={{ scale: 0.9 }}
-    initial={{y:-1000}}
-    animate={{ opacity: 1 ,y:0, transition: { duration: 2 }}}
+    initial={{ y: -1000 }}
+    animate={{ opacity: 1, y: 0, transition: { duration: 2 } }}
   >
-    <ChatBubbleOvalLeftEllipsisIcon className="w-6 h-6 text-gray-700 group-hover:text-green-500 group-hover:scale-110 transition-all duration-300" />
-    <span className="text-lg font-medium">Comment</span>
+    <MessageCircleMore className="w-6 h-6 group-hover:text-green-500 group-hover:scale-110 transition-all duration-300" />
+    <span className="text-sm font-medium">Comment</span>
   </motion.button>
-</div>;
+</div>
+
 
       {menu === "comment" && (
         <motion.form
@@ -276,7 +268,7 @@ const Post = ({ post, handleDeleteSuccess }) => {
 
       {menu === "menu" && (
         <motion.div
-          className="absolute top-12 right-0 bg-gray-950 w-40 shadow-md rounded-lg p-2 mt-1"
+          className=""
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1, transition: { duration: 0.3 } }}
           exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.3 } }}

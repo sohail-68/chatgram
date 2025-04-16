@@ -15,7 +15,13 @@ const Messges = React.lazy(() => import("./components/Messges.jsx"));
 const Notification = React.lazy(() => import("./components/Notification.jsx"));
 const Messgesss = React.lazy(() => import("./components/Messgesss.jsx"));
 const Explore = React.lazy(() => import("./components/Explore.jsx"));
+const MobileTabs = React.lazy(() => import("./components/MobileTabs.jsx"));
+const Changepassword = React.lazy(() => import("./components/changsepassword.jsx"));
+
 ///upload
+
+///signup.login
+//changepass
 function App() {
   return (
 
@@ -63,6 +69,17 @@ function App() {
                 <ProtectedRoute>
                   <MainLayout>
                     <Messges />
+                  </MainLayout>
+                </ProtectedRoute>
+              }
+            />
+
+<Route
+              path="/changepassword"
+              element={
+                <ProtectedRoute>
+                  <MainLayout>
+                    <Changepassword />
                   </MainLayout>
                 </ProtectedRoute>
               }

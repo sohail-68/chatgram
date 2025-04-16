@@ -6,9 +6,9 @@ const API = axios.create({ baseURL: 'http://localhost:5001/api' });
 
 // Attach the token for authorization
 API.interceptors.request.use((req) => {
-  if (localStorage
+  if (sessionStorage
 .getItem('token')) {
-    req.headers.Authorization =localStorage
+    req.headers.Authorization =sessionStorage
 .getItem('token');
   }
   return req;

@@ -35,9 +35,10 @@ console.log(posts);
     setPosts(posts.filter(post => post._id !== deletedPostId));
   };
 
+console.log(posts);
 
   return (
-    <div className=''>
+    <div className='flex flex-col gap-2 p-3'>
       {posts.map((post) => (
         <Post key={post._id} post={post}  handleDeleteSuccess={handleDeleteSuccess}/>
       ))}

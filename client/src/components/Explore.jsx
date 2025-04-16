@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useChatMessages } from "../context/AuthContext";
 
 const UserSearch = () => {
+  const { setMessages, messages, setSocket, socket } = useChatMessages();
+console.log(messages,"mess");
+
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [typingTimeout, setTypingTimeout] = useState(null);
@@ -20,7 +24,7 @@ const UserSearch = () => {
       axios
         .get(`http://localhost:5001/api/auth/search?q=${encodeURIComponent(query)}`, {
           headers: {
-            Authorization: localStorage
+            Authorization: sessionStorage
 .getItem("token"),
 
           },

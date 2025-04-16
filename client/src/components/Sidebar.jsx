@@ -3,15 +3,24 @@ import { Link, useLocation } from 'react-router-dom';
 import { FaHome, FaPlusCircle, FaUserCircle, FaCommentDots, FaBell, FaSearch } from 'react-icons/fa'; // Different icons from Font Awesome
 import useChatMessages from '../hooks/useChatMessages';
 import { io } from 'socket.io-client';
+import {
+  Home,
+  PlusCircle,
+  UserCircle,
+  MessageCircle,
+  Bell,
+  Search,
+} from "lucide-react";
 
 const data = [
-  { label: "Home", icon: <FaHome className='h-5 w-5' />, link: "/" },
-  { label: "Create Post", icon: <FaPlusCircle className='h-5 w-5' />, link: "/create" },
-  { label: "Profile", icon: <FaUserCircle className='h-5 w-5' />, link: "/profile" },
-  { label: "Messages", icon: <FaCommentDots className='h-5 w-5' />, link: "/messages" },
-  { label: "Notifications", icon: <FaBell className='h-5 w-5' />, link: "/noti" },
-  { label: "Explore", icon: <FaSearch className='h-5 w-5' />, link: "/explore" },
+  { label: "Home", icon: <Home className="h-5 w-5" />, link: "/" },
+  { label: "Create Post", icon: <PlusCircle className="h-5 w-5" />, link: "/create" },
+  { label: "Profile", icon: <UserCircle className="h-5 w-5" />, link: "/profile" },
+  { label: "Messages", icon: <MessageCircle className="h-5 w-5" />, link: "/messages" },
+  { label: "Notifications", icon: <Bell className="h-5 w-5" />, link: "/noti" },
+  { label: "Explore", icon: <Search className="h-5 w-5" />, link: "/explore" },
 ];
+
 
 const Sidebar = () => {
   const location = useLocation();
@@ -71,7 +80,7 @@ const Sidebar = () => {
             {data.map((item, index) => (
               <li
                 key={index}
-                onClick={() => setActiveIndex(index)}
+                onClick={() => {setActiveIndex(index);setIsOpen(false)}}
                 className={`rounded-lg p-1 transition-all duration-300 ease-in-out ${
                   activeIndex === index ? "bg-slate-950" : ""
                 }`}
@@ -95,9 +104,9 @@ const Sidebar = () => {
           </ul>
         </nav>
 
-        <div className="p-4">
-          <p className="text-center text-sm fixed bottom-0 w-64 text-gray-600">
-            © 2024 Instagram Clone
+        <div className="p-1">
+          <p className=" xl:text-md max-xl:text-sm fixed bottom-0 w-64 text-gray-900">
+            © 2025 ChatGram
           </p>
         </div>
       </div>

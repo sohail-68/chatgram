@@ -10,6 +10,8 @@ const CreatePost = () => {
   const [mood, setMood] = useState("");
   const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
+  const[imgpr,setPreviewImage]=useState(null)
+  
   const location = useLocation();
 const navigate=useNavigate()
   // Initialize form fields for edit mode
@@ -22,13 +24,18 @@ const navigate=useNavigate()
     }
   }, [location.state]);
 
-  const handleChange = async (e) => {
-    const { files } = e.target;
-    if (files && files.length > 0) {
-      const base64Image = await ImagetoBase64(files[0]);
-      setImage(base64Image);
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result);   
+        setPreviewImage(reader.result); // base64 string
+      };
+      reader.readAsDataURL(file);
     }
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,6 +49,7 @@ const navigate=useNavigate()
           mood,
         });
         toast.success("Post updated successfully!");
+
         setTimeout(() => {
         navigate("/")
           
@@ -50,6 +58,8 @@ const navigate=useNavigate()
       } else {
         // Create a new post
         const data = await createPost({ caption, image, mood });
+        console.log(data);
+        
         toast.success("Post created successfully!");
         console.log("Post created:", data);
       }
@@ -118,21 +128,19 @@ const navigate=useNavigate()
             <input
               id="file-upload"
               type="file"
-              onChange={handleChange}
+              onChange={handleImageChange}
               className="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"
             />
           </div>
 
           {/* Image Preview */}
-          {location.state?.post && image && (
-            <div className="mb-4">
-              <img
-                src={image}
-                alt="Post Image Preview"
-                className="w-full h-auto rounded-lg shadow-md"
-              />
-            </div>
-          )}
+          {imgpr && (
+    <img
+      src={imgpr}
+      alt="Preview"
+      className="w-40 h-40 object-cover rounded-full border shadow"
+    />
+  )}
 
           {/* Submit Button */}
           <button

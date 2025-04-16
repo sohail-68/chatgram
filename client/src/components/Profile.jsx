@@ -5,6 +5,8 @@ import axios from "axios";
 import { ImagetoBase64 } from "../utility/ImagetoBase64.js";
 import { FaBookmark, FaHeart, FaTrashAlt } from "react-icons/fa";
 import useChatMessages from "../hooks/useChatMessages.jsx";
+import { Del } from "../services/api.jsx";
+import { Pencil, Trash2 } from "lucide-react";
 const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [show, setShow] = useState(true);
@@ -197,17 +199,33 @@ console.log(use);
 
 
  },[])
+ const handleDelete = async (postId) => {
+  try {
+    await Del(postId);
+    fetchUserProfilUser()
+
+  } catch (error) {
+    console.error("Error deleting post:", error);
+  }
+};
+
  console.log(use);
- 
+ const moods = {
+  Normal: "😐",
+  Happy: "😊",
+  Sad: "😢",
+};
+
+function Chnage(){
+  navigate("/changepassword")
+}
   return (
-   <div>
-     <div className=" bg-white shadow-lg rounded-lg">
-      <h1 className="text-center text-xl font-semibold text-gray-800">
-        {message}
-      </h1>
+   <div className={`h-screen`}>
+     <div className=" bg-white shadow-lg rounded-lg p-4">
+    
 
       {/* Profile Info */}
-      <div className=" p-2 flex lg:flex-row xl:flex-row max-lg:flex-col max-md:flex-row max-md:gap-4 max-md:justify-center max-md:items-center max-sm:flex-row max-sm:gap-2 max-sm:justify-center max-sm:flex max-sm:items-center items-center mt-4">
+      <div className=" flex lg:flex-row xl:flex-row max-lg:flex-col max-md:flex-row max-md:gap-4 max-md:justify-center max-md:items-center max-sm:flex-row max-sm:gap-2 max-sm:justify-center max-sm:flex max-sm:items-center items-center xl:mt-1 max-xl:mt-2">
         <div className="flex flex-col gap-1">
         <div className="w-32 h-32 md:w-40 md:h-40 bg-gray-200 rounded-full overflow-hidden">
           {formData.profilePicture ? (
@@ -251,25 +269,29 @@ console.log(use);
         <div className="mt-4 md:mt-0 md:ml-6 flex-grow">
           {editMode ? (
             <>
-              <input
-                type="text"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                className="block w-full p-2 mb-2 border rounded"
-              />
+            <input
+  type="text"
+  name="username"
+  value={formData.username}
+  onChange={handleChange}
+  placeholder="Enter your username"
+  className="block w-full px-4 py-2 mb-4 text-md text-black bg-transparent border border-white rounded-lg placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
+/>
+
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="block w-full p-2 mb-2 border rounded"
+                className="block w-full px-4 py-2 mb-4 text-md text-black bg-transparent border border-white rounded-lg placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
+
               />
               <textarea
                 name="bio"
                 value={formData.bio}
                 onChange={handleChange}
-                className="block w-full p-2 mb-2 border rounded"
+                className="block w-full px-4 py-2 mb-1 text-md text-black bg-transparent border border-white rounded-lg placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
+
                 placeholder="Bio"
               />
             </>
@@ -316,7 +338,7 @@ console.log(use);
       </div>
 
       {/* Action Buttons */}
-      <div className="mt-6 flex justify-center space-x-4 pb-2 ">
+      <div className="mt-6 space-x-4 pb-2 ">
         {editMode ? (
           <>
             <button
@@ -335,23 +357,31 @@ console.log(use);
         ) : (
           <button
             onClick={toggleEditMode}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+            className="px-4 py-2 bg-gray-950 text-white rounded-lg"
           >
             Edit Profile
           </button>
+          
+
         )}
+      
       </div>
+      <button
+            onClick={()=>Chnage()}
+            className="px-4 py-2  bg-gray-900 text-white rounded-lg"
+          >
+        Change Password
+          </button>
 
 
     </div>
-    <div className="fixed xl:top-5 xl:right-20 z-50 flex xl:gap-2 lg:top-4 lg:right-20 lg:gap-1 md:top-4 md:gap-1 max-md:gap-1 md:right-20 max-md:top-4 max-md:right-20">
+    <div className="fixed xl:top-5 xl:right-28 z-50 flex xl:gap-2 lg:top-4 lg:right-20 lg:gap-1 md:top-4 md:gap-1 max-md:gap-1 md:right-20 max-md:top-4 max-md:right-20">
   <button
   onClick={del}
   aria-label="Remove all bookmarks"
-  className="flex items-center gap-2 px-2 py-2 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 active:scale-95 transition-transform duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-300"
+  className="flex items-center gap-2 px-3 py-3 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 active:scale-95 transition-transform duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-300"
 >
   <FaTrashAlt className="text-white" />
-  <span>Remove BK</span>
 </button>
 
   {/* Show Bookmarks Button */}
@@ -368,33 +398,56 @@ console.log(use);
 </div>
 
 
-    <div className=" bg-white shadow-lg rounded-lg  p-3 mt-3 ">
-        <div className="grid justify-center items-center gap-4 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 grid-cols-1">
-{
-  use.map((item,index)=>{
-    return (
-      <>
- <div className="gap-1 bg-white shadow-lg p-3 hover:scale-95 transition delay-100">
- <div className="">
-   <img src={item.image} alt="" className="rounded-md w-[100%] h-[100%] max-md:w-[60%] max-md:h-[60%]  object-contain aspect-[3/2]"  />
-   <p>caption:{item.caption}</p>
-   </div>
- </div>
-      </>
-    )
-  })
-}
-        </div>
+<div className={`grid gap-4 p-3 mt-3 ${use.length ? 'h-screen':''} sm:grid-cols-2 lg:grid-cols-3`}>
+  {use.map((item, index) => (
+    <div
+      key={index}
+      className="relative bg-white h-[500px] flex flex-col justify-between shadow-md rounded-lg overflow-hidden hover:scale-95 transition-all"
+    >
+      {/* Delete Button - floating top-right */}
+      <button
+        onClick={() => handleDelete(item._id)}
+        className="absolute top-2 right-2 p-1 bg-white/70 rounded-full hover:bg-red-100 z-10 transition"
+        title="Delete"
+      >
+        <Trash2 className="w-5 h-5 text-red-600 hover:text-red-800" />
+      </button>
 
+      {/* Image Section - fills most of the card */}
+      <div className="flex-1">
+        <img
+          src={item.image}
+          alt={`Post ${index}`}
+          className="w-full h-full object-cover"
+        />
       </div>
+
+      {/* Info Section */}
+      <div className="p-3 bg-white">
+        <p className="text-sm font-medium">
+          <strong>Caption:</strong> {item.caption || "No caption"}
+        </p>
+        <p className="text-sm font-medium">
+          <strong>Mood:</strong>{" "}
+          {Object.keys(moods).includes(item.mood)
+            ? `${item.mood} ${moods[item.mood]}`
+            : "Unknown 😶"}
+        </p>
+      </div>
+    </div>
+  ))}
+</div>
+
+
+
 {
   bookmarks.length!==0 ? (
     <div
-    className={`fixed overflow-auto scroll-smooth h-screen bg-gradient-to-b from-gray-900 to-black p-6 shadow-xl top-20 right-0 transition-transform duration-300 ${
+    className={`fixed overflow-auto scroll-smooth h-screen flex-col-reverse bg-gradient-to-b from-gray-900 to-black p-6 shadow-xl top-20 right-0 transition-transform duration-300 ${
       show ? "translate-x-full" : "translate-x-0"
     } custom-scrollbar`}
   >
-    <div className="flex justify-center items-center xl:flex-row gap-4 max-md:flex-col">
+    <div className="flex justify-center items-center xl:flex-col gap-4 max-md:flex-col">
       {bookmarks.map((item, index) => (
         <div
           key={index}

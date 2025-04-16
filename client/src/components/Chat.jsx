@@ -71,7 +71,7 @@ const Chat = ({ currentUserId, recipientId }) => {
 
     return (
         <div className="chat-box border p-4 rounded shadow-md">
-            <div className="messages-container overflow-y-auto mb-4" style={{ height: '200px' }}>
+            <div className="messages-container overflow-y-auto" >
                 {messages.map((msg, idx) => (
                     <div key={idx} className={`message ${msg.senderId === currentUserId ? 'text-right' : 'text-left'}`}>
                         <p className={`p-2 rounded ${msg.senderId === currentUserId ? 'bg-blue-300' : 'bg-gray-300'}`}>

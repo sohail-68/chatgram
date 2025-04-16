@@ -5,6 +5,7 @@ const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [img, setimg] = useState([]);
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -12,16 +13,31 @@ const Notifications = () => {
         const response = await axios.get("http://localhost:5001/api/notification", {
           headers: { Authorization: `${sessionStorage.getItem('token')}` }
         });
+  
         setNotifications(response.data);
+  console.log(response);
+  
+        // collect all images in array
+        const images = response.data
+          .map(n => n.image)
+          console.log(images);
+          
+          // .filter(img => img); 
+  
+        setimg(images);
+  
       } catch (err) {
         setError('Error fetching notifications');
       } finally {
         setLoading(false);
       }
     };
+  
     fetchNotifications();
   }, []);
+  
 console.log(notifications);
+console.log(img);
 
   if (loading) return <p>Loading notifications...</p>;
   if (error) return <p>{error}</p>;
@@ -95,6 +111,8 @@ console.log(notifications);
                     />
                   </div>
                 )}
+
+                {notification.image ? img.map((item)=>( <img src={item} alt="" srcset="" /> )) :"no" }
               </div>
             </li>
           ))}

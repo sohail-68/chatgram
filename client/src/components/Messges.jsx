@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { FiMoreVertical, FiSend } from 'react-icons/fi';
 import useChatMessages from '../hooks/useChatMessages';
@@ -15,7 +15,7 @@ const formatDate = (dateString) => {
 
 const Chat = () => {
     const { setMessages, messages, setSocket, socket } = useChatMessages();
-    const currentUserId = localStorage
+    const currentUserId = sessionStorage
 .getItem('userid');
     const { id: recipientId } = useParams();
     const location = useLocation();
@@ -105,7 +105,7 @@ console.log(messages);
         try {
             const profileResponse = await axios.get(
                 `http://localhost:5001/api/auth/userpro/${recipientId}`,
-                { headers: { Authorization: `${localStorage
+                { headers: { Authorization: `${sessionStorage
 .getItem('token')}` } }
             );
             setData(profileResponse.data);
@@ -119,70 +119,77 @@ console.log(messages);
     }, [recipientId]);
 
     return (
-        <div className="flex flex-col h-full w-full max-w-lg mx-auto bg-gray-50 rounded-lg shadow-lg border border-gray-300">
-            {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 bg-blue-600 text-white rounded-t-lg">
-                <div className="flex items-center space-x-3">
-                    <img
-                        src={data.profilePicture}
-                        alt="Profile"
-                        className="w-10 h-10 rounded-full border-2 border-white"
-                    />
-                    <div>
-                        <h2 className="text-lg font-semibold">{data.username}</h2>
-                        {isTyping && <span className="text-sm text-gray-200 italic">Typing...</span>}
-                    </div>
-                </div>
-                <button className="text-gray-100 hover:text-gray-300">
-                    <FiMoreVertical size={20} />
-                </button>
-            </div>
+      <div className="flex flex-col justify-between h-[92.8vh] mt-2  mx-auto rounded-2xl shadow-2xl bg-white/10 backdrop-blur-lg border border-white/20 overflow-hidden">
 
-            {/* Messages Container */}
-            <div
-                className="flex flex-col overflow-y-auto p-4 bg-gray-100"
-                style={{ height: '400px' }}
-            >
-                {(location.state || messages).map((msg, idx) => (
-                    <div
-                        key={idx}
-                        className={`flex mb-4 ${
-                            msg.senderId === currentUserId ? 'justify-end' : 'justify-start'
-                        }`}
-                    >
-                        <div
-                            className={`relative px-4 py-3 rounded-xl shadow-md max-w-xs text-sm ${
-                                msg.senderId === currentUserId
-                                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
-                                    : 'bg-white text-gray-800 border border-gray-200'
-                            }`}
-                        >
-                            <p>{msg.message}</p>
-                            <span className="text-xs text-gray-400 absolute bottom-1 right-2">
-                                {formatDate(msg.timestamp)}
-                            </span>
-                        </div>
-                    </div>
-                ))}
-            </div>
+  {/* Header */}
+  <div className="flex items-center justify-between px-5 py-4 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+    <Link className="flex items-center gap-3" to={`/userprofile/${data._id}`}>
+      <img
+        src={data.profilePicture}
+        alt="Profile"
+        className="w-11 h-11 rounded-full border-2 border-white object-cover"
+      />
+      <div>
+        <h2 className="text-lg font-semibold">{data.username}</h2>
+        {isTyping && (
+          <span className="text-sm text-gray-200 italic animate-pulse">
+            Typing...
+          </span>
+        )}
+      </div>
+    </Link>
+    <button className="text-white hover:text-gray-300 transition">
+      <FiMoreVertical size={22} />
+    </button>
+  </div>
 
-            {/* Input Section */}
-            <div className="flex items-center p-4 bg-white border-t border-gray-200 rounded-b-lg shadow-inner">
-                <input
-                    type="text"
-                    value={message}
-                    onChange={handleTyping}
-                    placeholder="Type a message..."
-                    className="flex-grow p-3 text-gray-800 bg-gray-100 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
-                />
-                <button
-                    onClick={sendMessage}
-                    className="ml-3 p-3 text-white rounded-full bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg hover:from-blue-600 hover:to-purple-700 transition duration-200 transform hover:scale-105"
-                >
-                    <FiSend size={20} />
-                </button>
-            </div>
+  {/* Messages */}
+  <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4 bg-gradient-to-b from-white/10 to-gray-800/20">
+    {(location.state || messages).map((msg, idx) => (
+      <div
+        key={idx}
+        className={`flex ${
+          msg.senderId === currentUserId ? "justify-end" : "justify-start"
+        }`}
+      >
+        <div
+          className={`flex flex-col gap-1 px-4 py-2 rounded-xl shadow-lg max-w-[80%] ${
+            msg.senderId === currentUserId
+              ? "bg-blue-600 text-white"
+              : "bg-white text-gray-800 border border-gray-200"
+          }`}
+        >
+          <div className="text-sm break-words">{msg.message}</div>
+          <div className="text-[10px] text-gray-300 mt-1 text-right">
+            {formatDate(msg.timestamp)}
+          </div>
         </div>
+      </div>
+    ))}
+  </div>
+
+  {/* Input Section */}
+  <div className="flex items-center gap-3 px-5 py-4 bg-white/20 backdrop-blur-md border-t border-white/10">
+    <input
+      type="text"
+      value={message}
+      onChange={handleTyping}
+      placeholder="Type your message..."
+      className="flex-1 px-4 py-3 rounded-md bg-white/80 text-gray-800 placeholder:text-gray-500 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+<button
+  onClick={sendMessage}
+  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-tr from-gray-800 via-indigo-900 to-black text-white rounded-md shadow-md hover:scale-105 transition-transform duration-200"
+>
+  <FiSend size={18} />
+  <span className="hidden sm:inline">Send</span>
+</button>
+
+  </div>
+
+</div>
+
+      
     );
 };
 

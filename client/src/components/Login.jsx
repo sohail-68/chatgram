@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useChatMessages } from '../context/AuthContext'; // Make sure this path is correct
 
 function App() {
+    const { messages, currentUserId,setCurrentUserId,settoken, suggestedUsers, setMessages } = useChatMessages();
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
@@ -17,13 +20,14 @@ function App() {
       const userData = response.data.payload.user;
 console.log(userData);
 
-      localStorage
+      sessionStorage
 .setItem('user', JSON.stringify(userData));
-      localStorage
+      sessionStorage
 .setItem('userid', userData.id);
-      localStorage
+      sessionStorage
 .setItem('token', response.data.token);
-
+setCurrentUserId(userData.id)
+settoken(response.data.token)
       navigate('/');
     } catch (error) {
       setMessage(error.response?.data?.error || 'Something went wrong');
@@ -133,9 +137,9 @@ console.log(userData);
 
         <div className="mt-4 text-center text-gray-100 text-sm sm:text-base">
           Don’t have an account?{' '}
-          <span className="text-blue-400 hover:underline cursor-pointer">
+          <Link className="text-blue-400 hover:underline cursor-pointer" to={"/signup"}>
             Sign Up
-          </span>
+          </Link>
         </div>
 
         {/* 3D Rotating Effect */}
