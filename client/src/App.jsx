@@ -15,6 +15,7 @@ const Messges = React.lazy(() => import("./components/Messges.jsx"));
 const Notification = React.lazy(() => import("./components/Notification.jsx"));
 const Messgesss = React.lazy(() => import("./components/Messgesss.jsx"));
 const Explore = React.lazy(() => import("./components/Explore.jsx"));
+const LogOut = React.lazy(() => import("./components/Logout.jsx"));
 const MobileTabs = React.lazy(() => import("./components/MobileTabs.jsx"));
 const Changepassword = React.lazy(() => import("./components/changsepassword.jsx"));
 
@@ -59,6 +60,16 @@ function App() {
                 <ProtectedRoute>
                   <MainLayout>
                     <Messgesss />
+                  </MainLayout>
+                </ProtectedRoute>
+              }
+            />
+              <Route
+              path="/logout"
+              element={
+                <ProtectedRoute>
+                  <MainLayout>
+                    <LogOut />
                   </MainLayout>
                 </ProtectedRoute>
               }

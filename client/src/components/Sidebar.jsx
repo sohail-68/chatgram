@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaHome, FaPlusCircle, FaUserCircle, FaCommentDots, FaBell, FaSearch } from 'react-icons/fa'; // Different icons from Font Awesome
 import useChatMessages from '../hooks/useChatMessages';
 import { io } from 'socket.io-client';
@@ -10,7 +10,10 @@ import {
   MessageCircle,
   Bell,
   Search,
+  LogIn,
+  LogOut,
 } from "lucide-react";
+import axios from 'axios';
 
 const data = [
   { label: "Home", icon: <Home className="h-5 w-5" />, link: "/" },
@@ -19,7 +22,10 @@ const data = [
   { label: "Messages", icon: <MessageCircle className="h-5 w-5" />, link: "/messages" },
   { label: "Notifications", icon: <Bell className="h-5 w-5" />, link: "/noti" },
   { label: "Explore", icon: <Search className="h-5 w-5" />, link: "/explore" },
+  { label: "Login", icon: <LogIn className="h-5 w-5" />, link: "/login" },
+  { label: "Logout", icon: <LogOut className="h-5 w-5" />, },
 ];
+
 
 
 const Sidebar = () => {
@@ -56,6 +62,28 @@ const Sidebar = () => {
 
   useEffect(() => {
   }, [unreadMessages]);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      // Optional API call to backend if needed
+      await axios.post("http://localhost:5001/api/auth/logout", {}, {
+        headers: {
+          Authorization: `${sessionStorage.getItem("token")}`,
+        },
+      });
+
+      // Clear token/session on frontend
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("userid");
+      sessionStorage.removeItem("user");
+
+      // Redirect to login or homepage
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed:", error.response?.data || error.message);
+    }
+  };
 
   return (
     <>
@@ -80,7 +108,7 @@ const Sidebar = () => {
             {data.map((item, index) => (
               <li
                 key={index}
-                onClick={() => {setActiveIndex(index);setIsOpen(false)}}
+                onClick={() => {setActiveIndex(index);setIsOpen(false);item.label==="Logout" && handleLogout() }}
                 className={`rounded-lg p-1 transition-all duration-300 ease-in-out ${
                   activeIndex === index ? "bg-slate-950" : ""
                 }`}
