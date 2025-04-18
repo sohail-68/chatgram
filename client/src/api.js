@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'http://localhost:5001' });
+const API = axios.create({ baseURL: 'https://chatgram-backend-934g.onrender.com' });
 
 export const registerUser = (data) => API.post('/register', data);
 export const loginUser = (data) => API.post('/login', data);
