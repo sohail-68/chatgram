@@ -31,7 +31,7 @@ export const fetchComments = (id) => API.get(`/posts/${id}/comments`);
 let socket;
 export const connectSocket = () => {
   if (!socket) {
-    socket = io('http://localhost:5000'); // Connect to server
+    socket = io('https://chatgram-backend-934g.onrender.com'); // Connect to server
   }
   return socket;
 };
