@@ -16,7 +16,7 @@ const formatDate = (dateString) => {
 
 const Chat = () => {
     const { setMessages, messages, setSocket, socket } = useChatMessages();
-    const currentUserId = sessionStorage
+    const currentUserId = localStorage
 .getItem('userid');
     const { id: recipientId } = useParams();
     const location = useLocation();
@@ -106,7 +106,7 @@ console.log(messages);
         try {
             const profileResponse = await axios.get(
                 `https://chatgram-backend-934g.onrender.com/api/auth/userpro/${recipientId}`,
-                { headers: { Authorization: `${sessionStorage
+                { headers: { Authorization: `${localStorage
 .getItem('token')}` } }
             );
             setData(profileResponse.data);
