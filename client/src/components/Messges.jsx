@@ -24,7 +24,10 @@ const Chat = () => {
     const [message, setMessage] = useState('');
     const [data, setData] = useState({});
     const [isTyping, setIsTyping] = useState(false);
+    
 const navigate=useNavigate()
+ const messagesEndRef = useRef(null);
+    
     useEffect(() => {
         const newSocket = io('https://chatgram-backend-934g.onrender.com');
         setSocket(newSocket);
@@ -69,6 +72,14 @@ const navigate=useNavigate()
         setMessages(filteredMessages);
     }, [currentUserId, recipientId, setMessages]);
 
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom(); // On load
+  }, [messages]); // Scroll on new message
+
     const sendMessage = () => {
         if (message.trim()) {
             const msgData = {
@@ -97,6 +108,7 @@ console.log(messages);
         setMessage(e.target.value);
         if (e.target.value) {
             socket.emit('typing', currentUserId);
+               scrollToBottom(); // On focus
         } else {
             socket.emit('stopTyping', currentUserId);
         }
@@ -120,85 +132,86 @@ console.log(messages);
     }, [recipientId]);
 
     return (
-<div className="container mx-auto min-h-screen flex flex-col px-2 py-3 sm:px-4 sm:py-5">
-  {/* Chat Container */}
-  <div className="flex flex-col flex-1 bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
+  <div className="container mx-auto min-h-screen flex flex-col px-2 py-3 sm:px-4 sm:py-5">
+      {/* Chat Container */}
+      <div className="flex flex-col flex-1 bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
 
-    {/* Header */}
-    <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
-      <button
-        onClick={() => navigate(-1)}
-        className="p-2 hover:bg-white/10 rounded-full transition"
-      >
-        <ArrowLeft className="h-5 w-5 text-white" />
-      </button>
+        {/* Header */}
+        <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+          {/* Back Button */}
+          <button onClick={() => navigate(-1)} className="p-2 hover:bg-white/10 rounded-full transition">
+            <ArrowLeft className="h-5 w-5 text-white" />
+          </button>
 
-      <Link to={`/userprofile/${data._id}`} className="flex items-center gap-3 flex-1 px-3">
-        <img
-          src={data.profilePicture}
-          alt="Profile"
-          className="w-10 h-10 rounded-full border-2 border-white object-cover"
-        />
-        <div className="truncate">
-          <h2 className="text-base font-semibold truncate">{data.username}</h2>
-          {isTyping && (
-            <span className="text-xs text-gray-200 italic animate-pulse">
-              Typing...
-            </span>
-          )}
-        </div>
-      </Link>
-
-      <button className="p-2 hover:bg-white/10 rounded-full transition">
-        <MoreVertical className="h-5 w-5 text-white" />
-      </button>
-    </div>
-
-    {/* Messages */}
-    <div className="flex-1 overflow-y-auto scroll-smooth space-y-3 px-3 py-4 bg-gradient-to-b from-pink-100 via-white to-rose-50 pb-28">
-      {(location.state || messages)?.length > 0 ? (
-        (location.state || messages).map((msg, idx) => (
-          <div
-            key={idx}
-            className={`flex ${msg.senderId === currentUserId ? "justify-end" : "justify-start"}`}
-          >
-            <div
-              className={`flex flex-col gap-1 px-4 py-2 rounded-xl shadow max-w-[80%] sm:max-w-[60%] ${
-                msg.senderId === currentUserId
-                  ? "bg-blue-600 text-white"
-                  : "bg-white text-gray-800 border border-gray-200"
-              }`}
-            >
-              <div className="text-sm break-words">{msg.message}</div>
-              <div className="text-[10px] text-gray-400 mt-1 text-right">
-                {formatDate(msg.timestamp)}
-              </div>
+          {/* Profile Link */}
+          <Link to={`/userprofile/${data._id}`} className="flex items-center gap-3 flex-1 px-3">
+            <img
+              src={data.profilePicture}
+              alt="Profile"
+              className="w-10 h-10 rounded-full border-2 border-white object-cover"
+            />
+            <div className="truncate">
+              <h2 className="text-base font-semibold truncate">{data.username}</h2>
+              {isTyping && (
+                <span className="text-xs text-gray-200 italic animate-pulse">Typing...</span>
+              )}
             </div>
-          </div>
-        ))
-      ) : (
-        <div className="text-center text-gray-400 mt-10">No messages yet</div>
-      )}
-    </div>
+          </Link>
 
-    {/* Input Section */}
-    <div className="sticky bottom-0 z-10 flex items-center gap-3 px-4 py-3 bg-white/30 backdrop-blur-md border-t border-white/10">
-      <input
-        type="text"
-        value={message}
-        onChange={handleTyping}
-        placeholder="Type your message..."
-        className="flex-1 px-4 py-2 rounded-lg bg-white/90 text-gray-800 placeholder:text-gray-500 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <button
-        onClick={sendMessage}
-        className="p-2 bg-gradient-to-tr from-gray-800 via-indigo-900 to-black text-white rounded-full hover:scale-105 transition-transform duration-200"
-      >
-        <SendHorizonal className="h-5 w-5" />
-      </button>
+          <button className="p-2 hover:bg-white/10 rounded-full transition">
+            <MoreVertical className="h-5 w-5 text-white" />
+          </button>
+        </div>
+
+        {/* Messages */}
+        <div className="flex-1 overflow-y-auto scroll-smooth space-y-3 px-3 py-4 bg-gradient-to-b from-pink-100 via-white to-rose-50">
+          {(location.state || messages)?.length > 0 ? (
+            (location.state || messages).map((msg, idx) => (
+              <div
+                key={idx}
+                className={`flex ${msg.senderId === currentUserId ? "justify-end" : "justify-start"}`}
+              >
+                <div
+                  className={`flex flex-col gap-1 px-4 py-2 rounded-xl shadow max-w-[80%] sm:max-w-[60%] ${
+                    msg.senderId === currentUserId
+                      ? "bg-blue-600 text-white"
+                      : "bg-white text-gray-800 border border-gray-200"
+                  }`}
+                >
+                  <div className="text-sm break-words">{msg.message}</div>
+                  <div className="text-[10px] text-gray-400 mt-1 text-right">
+                    {formatDate(msg.timestamp)}
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="text-center text-gray-400 mt-10">No messages yet</div>
+          )}
+
+          {/* Invisible Scroll Target */}
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Input Section */}
+        <div className="flex items-center gap-3 px-4 py-3 bg-white/30 backdrop-blur-md border-t border-white/10">
+          <input
+            type="text"
+            value={message}
+            onFocus={scrollToBottom}
+            onChange={handleTyping}
+            placeholder="Type your message..."
+            className="flex-1 px-4 py-2 rounded-lg bg-white/90 text-gray-800 placeholder:text-gray-500 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            onClick={sendMessage}
+            className="p-2 bg-gradient-to-tr from-gray-800 via-indigo-900 to-black text-white rounded-full hover:scale-105 transition-transform duration-200"
+          >
+            <SendHorizonal className="h-5 w-5" />
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
 
       
