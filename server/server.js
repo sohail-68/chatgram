@@ -9,12 +9,11 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:3000", // Update this with your frontend URL
-        methods: ["GET", "POST"],
-    },
+    origin: ['https://chatgram-34co.onrender.com'], // e.g. Vercel, Netlify domain
+    methods: ['GET', 'POST'],
+    credentials: true
+  }
 });
-app.use(express.json({ limit: '5mb' }));
-app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 
 // Connect to MongoDB
 connectDB();
