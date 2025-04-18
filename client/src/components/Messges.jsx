@@ -188,6 +188,8 @@ console.log(messages);
     className="flex-1 px-4 py-2 rounded-md bg-white/80 text-gray-800 placeholder:text-gray-500 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
   />
   <button
+    onFocus={() => setfocus(true)}
+
     onClick={sendMessage}
     className="p-4 bg-gradient-to-tr from-gray-800 via-indigo-900 to-black text-white rounded-full hover:scale-105 transition-transform duration-200"
   >
