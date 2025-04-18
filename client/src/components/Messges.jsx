@@ -189,9 +189,11 @@ console.log(messages);
   />
   <button
     onFocus={() => setfocus(true)}
-
-    onClick={sendMessage}
-    onBlur={() => setfocus(false)}
+    onClick={() => {
+      sendMessage();
+      setfocus(false);
+    }}
+    
 
     className="p-4 bg-gradient-to-tr from-gray-800 via-indigo-900 to-black text-white rounded-full hover:scale-105 transition-transform duration-200"
   >
