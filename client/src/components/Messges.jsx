@@ -120,7 +120,7 @@ console.log(messages);
     }, [recipientId]);
 
     return (
-<div className="flex flex-col justify-between p-1 h-[92.8vh] mt-2 mx-auto rounded-2xl shadow-2xl bg-white/10 backdrop-blur-lg border border-white/20 overflow-hidden">
+<div className="flex flex-col justify-between mx-2  h-[92.8vh] mt-2  rounded-2xl shadow-2xl bg-white/10 backdrop-blur-lg border border-white/20 overflow-hidden">
 
 {/* Header */}
 <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
@@ -150,7 +150,7 @@ console.log(messages);
 </div>
 
 {/* Messages */}
-<div className="flex-1 overflow-y-auto p-6 py-3 space-y-3 bg-gradient-to-b from-pink-100 via-white to-rose-50">
+<div className="flex-1 overflow-y-auto  space-y-3 bg-gradient-to-b from-pink-100 via-white to-rose-50">
   {(location.state || messages).map((msg, idx) => (
     <div
       key={idx}
