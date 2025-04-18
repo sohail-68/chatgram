@@ -20,7 +20,7 @@ const UserProfile = () => {
   
  //params);
  //location);
-  const currentUserId = sessionStorage
+  const currentUserId = localStorage
 .getItem("userid");
 
   const navigate=useNavigate()
@@ -29,7 +29,7 @@ const UserProfile = () => {
   const [data, setData] = useState(null);
   const [post, setPost] = useState([]);
   const [showChat, setShowChat] = useState(false); // Toggle for chat box visibility
-  const token = sessionStorage
+  const token = localStorage
 .getItem('token');
   const [postCount, setPostCount] = useState(null);
 
@@ -169,14 +169,14 @@ function seTNew(id){
         onClick={handleFollowClick} 
         className={`px-4 py-2 max-xl:relative max-xl:right-16
      rounded-md font-semibold ${
-          data.followers.includes(sessionStorage
+          data.followers.includes(localStorage
 .getItem("userid"))  ? "bg-gray-400" : "bg-blue-500"
         } text-white`}
       >
-        {data.followers.includes(sessionStorage
+        {data.followers.includes(localStorage
 .getItem("userid")) ? 'unfollow' : 'follow'}
       </button>
-      {data.followers.includes(sessionStorage
+      {data.followers.includes(localStorage
 .getItem("userid"))  && (
             <button 
               // onClick={() => setShowChat(!showChat)} 
@@ -201,7 +201,7 @@ function seTNew(id){
 
 
         {/* {showChat && ( */}
-      {/* { data.followers.length ? <Chat currentUserId={sessionStorage
+      {/* { data.followers.length ? <Chat currentUserId={localStorage
 .getItem('userid')} recipientId={location.state.post.user._id}  />:null} */}
       {/* )} */}
     </div>
