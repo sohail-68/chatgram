@@ -103,7 +103,7 @@ const Post = ({ post, handleDeleteSuccess }) => {
       if (!token) throw new Error("User not authenticated");
   
       await axios.post(
-        `http://localhost:5001/api/auth/bookmark/${data}`,
+        `https://chatgram-backend-934g.onrender.com/api/auth/bookmark/${data}`,
         {},
         { headers: { Authorization: `${token}` } }
       );
