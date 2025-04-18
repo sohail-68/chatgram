@@ -20,11 +20,11 @@ function App() {
       const userData = response.data.payload.user;
 console.log(userData);
 
-      sessionStorage
+      localStorage
 .setItem('user', JSON.stringify(userData));
-      sessionStorage
+      localStorage
 .setItem('userid', userData.id);
-      sessionStorage
+      localStorage
 .setItem('token', response.data.token);
 setCurrentUserId(userData.id)
 settoken(response.data.token)
