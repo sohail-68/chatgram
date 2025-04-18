@@ -7,7 +7,7 @@ const Suggest = () => {
 
   async function fetchSuggestedUsers() {
     try {
-      const response = await axios.get('http://localhost:5001/api/auth/suggested-users', {
+      const response = await axios.get('https://chatgram-backend-934g.onrender.com/api/auth/suggested-users', {
         headers: {
           Authorization: sessionStorage.getItem("token")
         }
