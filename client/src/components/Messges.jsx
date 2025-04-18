@@ -121,9 +121,8 @@ console.log(messages);
 
     return (
 <div className="container mx-auto min-h-screen flex flex-col px-2 py-3 sm:px-4 sm:py-5">
-
   {/* Chat Container */}
-  <div className="flex flex-col justify-between h-full bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
+  <div className="flex flex-col flex-1 bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
 
     {/* Header */}
     <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
@@ -156,30 +155,34 @@ console.log(messages);
     </div>
 
     {/* Messages */}
-    <div className="flex-1 overflow-y-auto scroll-smooth space-y-3 px-3 py-4 bg-gradient-to-b from-pink-100 via-white to-rose-50">
-      {(location.state || messages).map((msg, idx) => (
-        <div
-          key={idx}
-          className={`flex ${msg.senderId === currentUserId ? "justify-end" : "justify-start"}`}
-        >
+    <div className="flex-1 overflow-y-auto scroll-smooth space-y-3 px-3 py-4 bg-gradient-to-b from-pink-100 via-white to-rose-50 pb-28">
+      {(location.state || messages)?.length > 0 ? (
+        (location.state || messages).map((msg, idx) => (
           <div
-            className={`flex flex-col gap-1 px-4 py-2 rounded-xl shadow max-w-[80%] sm:max-w-[60%] ${
-              msg.senderId === currentUserId
-                ? "bg-blue-600 text-white"
-                : "bg-white text-gray-800 border border-gray-200"
-            }`}
+            key={idx}
+            className={`flex ${msg.senderId === currentUserId ? "justify-end" : "justify-start"}`}
           >
-            <div className="text-sm break-words">{msg.message}</div>
-            <div className="text-[10px] text-gray-400 mt-1 text-right">
-              {formatDate(msg.timestamp)}
+            <div
+              className={`flex flex-col gap-1 px-4 py-2 rounded-xl shadow max-w-[80%] sm:max-w-[60%] ${
+                msg.senderId === currentUserId
+                  ? "bg-blue-600 text-white"
+                  : "bg-white text-gray-800 border border-gray-200"
+              }`}
+            >
+              <div className="text-sm break-words">{msg.message}</div>
+              <div className="text-[10px] text-gray-400 mt-1 text-right">
+                {formatDate(msg.timestamp)}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <div className="text-center text-gray-400 mt-10">No messages yet</div>
+      )}
     </div>
 
     {/* Input Section */}
-    <div className="flex items-center gap-3 px-4 py-3 bg-white/30 backdrop-blur-md border-t border-white/10">
+    <div className="sticky bottom-0 z-10 flex items-center gap-3 px-4 py-3 bg-white/30 backdrop-blur-md border-t border-white/10">
       <input
         type="text"
         value={message}
@@ -196,6 +199,7 @@ console.log(messages);
     </div>
   </div>
 </div>
+
 
       
     );
