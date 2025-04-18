@@ -19,7 +19,7 @@ const Dashboard = () => {
 const {bookmarks,setbookmarks} =useChatMessages()
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
     if (!token) {
       navigate("/login");
@@ -45,7 +45,7 @@ setMessage(response.data.message);
           profilePicture: response.data.user.profilePicture,
           gender: response.data.user.gender,
         });
-        sessionStorage.setItem("profile", JSON.stringify(response.data.user));
+        localStorage.setItem("profile", JSON.stringify(response.data.user));
       } catch (error) {
         console.error("Failed to fetch user data", error);
       }
@@ -81,7 +81,7 @@ setMessage(response.data.message);
 
   // Handle form submission
   const handleSave = async () => {
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
     try {
       const response = await axios.put(
         "https://chatgram-backend-934g.onrender.com/api/auth/myprofile",
@@ -103,7 +103,7 @@ setMessage(response.data.message);
         `https://chatgram-backend-934g.onrender.com/api/userpost/all`,
         {
           headers: {
-            Authorization: `${sessionStorage.getItem("token")}`,
+            Authorization: `${localStorage.getItem("token")}`,
           },
         }
       );
@@ -124,7 +124,7 @@ console.log(use);
         `https://chatgram-backend-934g.onrender.com/api/user/postCount`,
         {
           headers: {
-            Authorization: `${sessionStorage.getItem("token")}`, // Add "Bearer" before the token
+            Authorization: `${localStorage.getItem("token")}`, // Add "Bearer" before the token
           },
         }
       );
@@ -141,7 +141,7 @@ console.log(use);
       const response = await axios.get(
         "https://chatgram-backend-934g.onrender.com/api/auth/bookmarked",
         {
-          headers: { Authorization: sessionStorage.getItem("token") },
+          headers: { Authorization: localStorage.getItem("token") },
         }
       );
       console.log(response);
@@ -160,7 +160,7 @@ console.log(use);
   const del = async () => {
     
     try {
-      const token =sessionStorage.getItem("token"); // Retrieve token from sessionStorage
+      const token =localStorage.getItem("token"); // Retrieve token from localStorage
       if (!token) throw new Error("User not authenticated");
   
       // Make POST request to bookmark API
