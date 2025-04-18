@@ -79,7 +79,7 @@ const location=useLocation()
                 </span>
               )} */}
             </div>
-            <span className="text-xs">{tab.label}{unreadMessages}</span>
+            <span className="text-xs">{tab.label}{tab.label==="Messages" && unreadMessages}</span>
           </NavLink>
         );
       })}
