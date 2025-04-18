@@ -4,8 +4,13 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Suggest from "../components/Suggest";
 import MobileTabs from "../components/MobileTabs";
+import { useLocation } from "react-router-dom";
 
 const MainLayout = ({ children }) => {
+  const location=useLocation()
+  console.log(location);
+
+  
   return (
     <div className="flex flex-col h-screen">
       <Header />
@@ -18,7 +23,8 @@ const MainLayout = ({ children }) => {
           <Suggest/>
         </div>
         {/* <Suggest /> */}
-        <MobileTabs />
+        {!location.pathname.includes("/message") && <MobileTabs />}
+        
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import {
   Home,
   PlusCircle,
@@ -7,7 +7,8 @@ import {
   MessageCircle,
   Search,
 } from 'lucide-react';
-// import { useChatMessages } from '../hooks/useChatMessages'
+import useChatMessages from '../hooks/useChatMessages';
+import { io } from 'socket.io-client';
 
 const tabs = [
   { label: "Home", icon: Home, link: "/" },
@@ -19,6 +20,41 @@ const tabs = [
 
 const MobileTabs = () => {
   // const { unreadMessages } = useChatMessages();
+  const { messages, unreadMessages, setSocket, setMessages, setUnreadMessages } = useChatMessages();
+
+
+const location=useLocation()
+
+
+    useEffect(() => {
+      const newSocket = io('http://localhost:5001');
+      setSocket(newSocket);
+    
+      // Join room
+      newSocket.emit('joinRoom', sessionStorage.getItem("userid"));
+    
+      // Listen for messages
+      newSocket.on('receiveMessage', (msg) => {
+        setMessages((prev) => [...prev, msg]);
+        setUnreadMessages((prev) => prev + 1);
+      });
+    
+      // Cleanup
+      return () => {
+        newSocket.off('receiveMessage'); // Ensure listener is removed
+        newSocket.disconnect();
+      };
+    }, [setMessages, setSocket, setUnreadMessages]);
+  
+    useEffect(() => {
+      if (location.pathname === "/messages") {
+        setUnreadMessages(0); // Reset unread messages on Messages page
+      }
+    }, [location.pathname, setUnreadMessages]);
+  
+    useEffect(() => {
+    }, [unreadMessages]);
+  
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-black border-t shadow-md z-50 flex justify-between px-6 py-2 md:hidden">
@@ -43,7 +79,7 @@ const MobileTabs = () => {
                 </span>
               )} */}
             </div>
-            <span className="text-xs">{tab.label}</span>
+            <span className="text-xs">{tab.label}{unreadMessages}</span>
           </NavLink>
         );
       })}

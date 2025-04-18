@@ -65,7 +65,6 @@ export const ChatMessagesProvider = ({ children }) => {
 
     return () => newSocket.disconnect();
   }, [currentUserId, suggestedUsers]);
-console.log(suggestedUsers);
 
   return (
     <ChatMessagesContext.Provider
