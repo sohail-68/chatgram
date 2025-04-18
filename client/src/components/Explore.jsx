@@ -24,7 +24,7 @@ console.log(messages,"mess");
       axios
         .get(`https://chatgram-backend-934g.onrender.com/api/auth/search?q=${encodeURIComponent(query)}`, {
           headers: {
-            Authorization: sessionStorage
+            Authorization: localStorage
 .getItem("token"),
 
           },
