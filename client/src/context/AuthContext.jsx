@@ -16,8 +16,8 @@ export const ChatMessagesProvider = ({ children }) => {
 
 
   useEffect(() => {
-    const storedUserId = sessionStorage.getItem('userid');
-    const storedToken = sessionStorage.getItem('token');
+    const storedUserId = localStorage.getItem('userid');
+    const storedToken = localStorage.getItem('token');
   
     setCurrentUserId(storedUserId);
     settoken(storedToken);
