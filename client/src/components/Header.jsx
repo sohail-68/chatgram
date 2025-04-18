@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FiSearch, FiHeart, FiMessageCircle, FiUser } from 'react-icons/fi';
 import { useEffect } from 'react';
 import img from "../images/img.jpg"
-const getprfrofile = JSON.parse(sessionStorage.getItem('profile')) || {};
+const getprfrofile = JSON.parse(localStorage.getItem('profile')) || {};
 const Header = () => {
   
   const [scroll,setScroll]=useState(false)
