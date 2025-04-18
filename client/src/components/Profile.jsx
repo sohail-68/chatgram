@@ -28,7 +28,7 @@ const {bookmarks,setbookmarks} =useChatMessages()
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5001/api/auth/myprofile",
+          "https://chatgram-backend-934g.onrender.com/api/auth/myprofile",
           {
             headers: { Authorization: token },
           }
@@ -84,7 +84,7 @@ setMessage(response.data.message);
     const token = sessionStorage.getItem("token");
     try {
       const response = await axios.put(
-        "http://localhost:5001/api/auth/myprofile",
+        "https://chatgram-backend-934g.onrender.com/api/auth/myprofile",
         formData,
         { headers: { Authorization: token } }
       );
@@ -100,7 +100,7 @@ setMessage(response.data.message);
   const fetchUserProfilUser = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5001/api/userpost/all`,
+        `https://chatgram-backend-934g.onrender.com/api/userpost/all`,
         {
           headers: {
             Authorization: `${sessionStorage.getItem("token")}`,
@@ -121,7 +121,7 @@ console.log(use);
   const Count = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5001/api/user/postCount`,
+        `https://chatgram-backend-934g.onrender.com/api/user/postCount`,
         {
           headers: {
             Authorization: `${sessionStorage.getItem("token")}`, // Add "Bearer" before the token
@@ -139,7 +139,7 @@ console.log(use);
   const Bookmark = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5001/api/auth/bookmarked",
+        "https://chatgram-backend-934g.onrender.com/api/auth/bookmarked",
         {
           headers: { Authorization: sessionStorage.getItem("token") },
         }
@@ -165,7 +165,7 @@ console.log(use);
   
       // Make POST request to bookmark API
       const response = await axios.delete(
-        `http://localhost:5001/api/auth/users/bookmarks`,
+        `https://chatgram-backend-934g.onrender.com/api/auth/users/bookmarks`,
         {
           headers: { Authorization: `${token}` },
         }
