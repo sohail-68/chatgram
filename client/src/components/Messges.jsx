@@ -27,7 +27,7 @@ const Chat = () => {
     const [isTyping, setIsTyping] = useState(false);
 const navigate=useNavigate()
     useEffect(() => {
-        const newSocket = io('http://localhost:5001');
+        const newSocket = io('https://chatgram-backend-934g.onrender.com');
         setSocket(newSocket);
 
         // Join room
@@ -108,7 +108,7 @@ console.log(messages);
     const fetchUserProfile = async () => {
         try {
             const profileResponse = await axios.get(
-                `http://localhost:5001/api/auth/userpro/${recipientId}`,
+                `https://chatgram-backend-934g.onrender.com/api/auth/userpro/${recipientId}`,
                 { headers: { Authorization: `${sessionStorage
 .getItem('token')}` } }
             );
