@@ -120,7 +120,8 @@ console.log(messages);
     }, [recipientId]);
 
     return (
-<div className="container mx-auto h-screen flex flex-col px-2 py-3 sm:px-4 sm:py-5">
+<div className="container mx-auto min-h-screen flex flex-col px-2 py-3 sm:px-4 sm:py-5">
+
   {/* Chat Container */}
   <div className="flex flex-col justify-between h-full bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
 
