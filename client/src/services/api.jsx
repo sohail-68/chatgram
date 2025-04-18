@@ -6,9 +6,9 @@ const API = axios.create({ baseURL: 'https://chatgram-backend-934g.onrender.com/
 
 // Attach the token for authorization
 API.interceptors.request.use((req) => {
-  if (sessionStorage
+  if (localStorage
 .getItem('token')) {
-    req.headers.Authorization =sessionStorage
+    req.headers.Authorization =localStorage
 .getItem('token');
   }
   return req;
