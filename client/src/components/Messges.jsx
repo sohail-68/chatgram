@@ -123,7 +123,7 @@ console.log(messages);
     }, [recipientId]);
 
     return (
-<div className="flex flex-col justify-between h-[92.8vh] mt-2 mx-auto rounded-2xl shadow-2xl bg-white border border-white/20 overflow-hidden">
+<div className="flex flex-col justify-between h-[92.8vh] mt-2 mx-auto rounded-2xl shadow-2xl  bg-gradient-to-b from-white/10 to-gray-800/20 overflow-hidden">
 
 {/* Header */}
 <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
