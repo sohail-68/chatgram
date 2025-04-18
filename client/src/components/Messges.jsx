@@ -123,7 +123,7 @@ console.log(messages);
     }, [recipientId]);
 
     return (
-<div className="flex flex-col justify-between h-[92.8vh] mt-2 mx-auto rounded-2xl shadow-2xl bg-white/10 backdrop-blur-lg border border-white/20 overflow-hidden">
+<div className="flex flex-col justify-between h-[92.8vh] mt-2 mx-auto rounded-2xl shadow-2xl bg-white border border-white/20 overflow-hidden">
 
 {/* Header */}
 <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
@@ -176,7 +176,7 @@ console.log(messages);
 </div>
 
 {/* Input Section */}
-<div className={`flex items-center ${focus ? "relative bottom-14":" relative  top-0 " }  gap-3 px-4 py-3 bg-white/20 backdrop-blur-md border-t border-white/10`}>
+<div className={`flex items-center ${focus ? "relative bottom-14":"" }  gap-3 px-4 py-3 `}>
   <input
     type="text"
     value={message}
@@ -189,7 +189,7 @@ console.log(messages);
   />
   <button
     onClick={sendMessage}
-    className="p-2 bg-gradient-to-tr from-gray-800 via-indigo-900 to-black text-white rounded-full hover:scale-105 transition-transform duration-200"
+    className="p-4 bg-gradient-to-tr from-gray-800 via-indigo-900 to-black text-white rounded-full hover:scale-105 transition-transform duration-200"
   >
     <SendHorizonal className="h-5 w-5" />
   </button>
