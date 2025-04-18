@@ -39,7 +39,7 @@ const Sidebar = () => {
     setSocket(newSocket);
   
     // Join room
-    newSocket.emit('joinRoom', sessionStorage.getItem("userid"));
+    newSocket.emit('joinRoom', localStorage.getItem("userid"));
   
     // Listen for messages
     newSocket.on('receiveMessage', (msg) => {
@@ -69,14 +69,14 @@ const Sidebar = () => {
       // Optional API call to backend if needed
       await axios.post("https://chatgram-backend-934g.onrender.com/api/auth/logout", {}, {
         headers: {
-          Authorization: `${sessionStorage.getItem("token")}`,
+          Authorization: `${localStorage.getItem("token")}`,
         },
       });
 
       // Clear token/session on frontend
-      sessionStorage.removeItem("token");
-      sessionStorage.removeItem("userid");
-      sessionStorage.removeItem("user");
+      localStorage.removeItem("token");
+      localStorage.removeItem("userid");
+      localStorage.removeItem("user");
 
       // Redirect to login or homepage
       navigate("/login");
