@@ -32,7 +32,7 @@ const Post = ({ post, handleDeleteSuccess }) => {
 
   useEffect(() => {
     const isPostLiked = post.likes.some(
-      (like) => like.user === sessionStorage.getItem("userid")
+      (like) => like.user === localStorage.getItem("userid")
     );
     setLiked(isPostLiked);
   }, [post.likes]);
@@ -43,7 +43,7 @@ const Post = ({ post, handleDeleteSuccess }) => {
     try {
       const updatedPost = await likePost(post._id);
       const isLiked = updatedPost.data.post.likes.some(
-        (like) => like.user === sessionStorage.getItem("userid")
+        (like) => like.user === localStorage.getItem("userid")
       );
       setLiked(isLiked);
       setLikesCount(updatedPost.data.post.likes.length);
@@ -90,7 +90,7 @@ const Post = ({ post, handleDeleteSuccess }) => {
   
 
   const openUserProfile = () => {
-    if (post.user._id === sessionStorage.getItem("userid")) {
+    if (post.user._id === localStorage.getItem("userid")) {
       navigate("/profile");
     } else {
       navigate(`/userprofile/${post.user._id}`, { state: { post } });
@@ -99,7 +99,7 @@ const Post = ({ post, handleDeleteSuccess }) => {
 
   const handleSave = async (data) => {
     try {
-      const token = sessionStorage.getItem("token");
+      const token = localStorage.getItem("token");
       if (!token) throw new Error("User not authenticated");
   
       await axios.post(
