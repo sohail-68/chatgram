@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { io } from 'socket.io-client';
 
-const API = axios.create({ baseURL: 'http://localhost:5001/api' });
+const API = axios.create({ baseURL: 'https://chatgram-backend-934g.onrender.com/api' });
 
 // Attach the token for authorization
 API.interceptors.request.use((req) => {
@@ -50,7 +50,7 @@ export const onMessageReceived = (callback) => {
 export const fetchBookmarks = async () => {
   try {
     const response = await axios.get(
-      "http://localhost:5001/api/auth/bookmarked",
+      "https://chatgram-backend-934g.onrender.com/api/auth/bookmarked",
       {
         headers: { Authorization: localStorage
 .getItem("token") },
