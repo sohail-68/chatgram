@@ -44,7 +44,7 @@ const UserProfile = () => {
   const handleFollowClick = async () => {
     try {
       const res = await axios.post(
-        `http://localhost:5001/api/auth/follow/${params.id}`,
+        `https://chatgram-backend-934g.onrender.com/api/auth/follow/${params.id}`,
         {},
         {
           headers: {
@@ -66,7 +66,7 @@ console.log(isFollowing);
   const fetchUserProfile = async () => {
     try {
       const profileResponse = await axios.get(
-        `http://localhost:5001/api/auth/userpro/${params.id}`,
+        `https://chatgram-backend-934g.onrender.com/api/auth/userpro/${params.id}`,
         {
           headers: {
             Authorization: `${token}`,
@@ -84,7 +84,7 @@ console.log(isFollowing);
   const fetchPostCount = async () => {
     try {
       const postResponse = await axios.get(
-        `http://localhost:5001/api/count/${params.id}`,
+        `https://chatgram-backend-934g.onrender.com/api/count/${params.id}`,
         {
           headers: {
             Authorization: token,
@@ -105,7 +105,7 @@ console.log("pos",post);
   useEffect(() => {
     fetchUserProfile();
     fetchPostCount();
-         const newSocket = io('http://localhost:5001');
+         const newSocket = io('https://chatgram-backend-934g.onrender.com');
     setSocket(newSocket);
 
     newSocket.emit('joinRoom', currentUserId);
