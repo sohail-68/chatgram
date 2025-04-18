@@ -31,7 +31,7 @@ const location=useLocation()
       setSocket(newSocket);
     
       // Join room
-      newSocket.emit('joinRoom', sessionStorage.getItem("userid"));
+      newSocket.emit('joinRoom', localStorage.getItem("userid"));
     
       // Listen for messages
       newSocket.on('receiveMessage', (msg) => {
